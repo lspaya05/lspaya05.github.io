@@ -1,0 +1,49 @@
+name: prefetch-data
+
+# Pull Strava + Google Photos into content/data/*.json on a schedule.
+# Secrets stay server-side; only plain JSON ships to the static site.
+# Each step skips itself if its secrets are not configured, so this workflow
+# is safe to enable before you've set anything up.
+on:
+  schedule:
+    - cron: "17 6 * * *"   # daily ~06:17 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: prefetch-data
+  cancel-in-progress: true
+
+jobs:
+  prefetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Strava -> biking.json
+        env:
+          STRAVA_CLIENT_ID: ${{ secrets.STRAVA_CLIENT_ID }}
+          STRAVA_CLIENT_SECRET: ${{ secrets.STRAVA_CLIENT_SECRET }}
+          STRAVA_REFRESH_TOKEN: ${{ secrets.STRAVA_REFRESH_TOKEN }}
+        run: node .github/scripts/strava.mjs
+
+      - name: Google Photos -> pictures.json
+        env:
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+          GOOGLE_REFRESH_TOKEN: ${{ secrets.GOOGLE_REFRESH_TOKEN }}
+          GOOGLE_PHOTOS_ALBUM_ID: ${{ secrets.GOOGLE_PHOTOS_ALBUM_ID }}
+        run: node .github/scripts/photos.mjs
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add content/data
+          git diff --cached --quiet || git commit -m "chore: refresh prefetched data [skip ci]"
+          git push

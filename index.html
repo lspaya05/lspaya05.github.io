@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<base href="./">
+<link rel="icon" href="favicon.svg">
+<script src="./support.js"></script>
+<script src="./js/app.js"></script>
+<script src="./js/pages/Home.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0; background:#f7f6f3; color:#1f1d1a; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;}
+  :root{--display:"Newsreader",Georgia,serif; --ui:"Hanken Grotesk",system-ui,sans-serif; --card-radius:14px; --divider:1px; --mw:min(1340px,92vw);}
+  ::selection{background:#1f1d1a; color:#f7f6f3;}
+  a{color:inherit; text-decoration:none;}
+  ::-webkit-scrollbar{width:10px;} ::-webkit-scrollbar-thumb{background:#dcd8d0; border-radius:8px;} ::-webkit-scrollbar-track{background:transparent;}
+  [style*="--card-radius"]:hover:not([style*="repeating-linear"]){ background:#f1efe9 !important; }
+  [style*="repeating-linear"][style*="--card-radius"]:hover{ filter:brightness(0.975); }
+  @media (max-width:900px){
+    #heroGrid{grid-template-columns:1fr !important; gap:34px !important;}
+    #projGrid,#readGrid,#miscGrid{grid-template-columns:repeat(2,1fr) !important;}
+  }
+  @media (max-width:600px){
+    #projGrid,#readGrid,#miscGrid,#heroBento2{grid-template-columns:1fr !important;}
+  }
+</style>
+</helmet>
+
+<div style="font-family:var(--ui); min-height:100vh;">
+
+  <dc-import name="SiteNav" active="home" hint-size="100%,62px"></dc-import>
+
+  <!-- HERO -->
+  <section id="top" style="max-width:var(--mw); margin:0 auto; padding:60px 32px 92px; scroll-margin-top:74px;">
+    <div id="heroGrid" style="display:grid; grid-template-columns:minmax(0,0.95fr) minmax(0,1.12fr); gap:56px; align-items:start;">
+
+      <!-- bio -->
+      <div>
+        <p style="font-family:var(--display); font-size:clamp(24px,2.6vw,34px); line-height:1.3; color:#b3ada3; margin:0; letter-spacing:-0.005em; text-wrap:pretty;">{{ bio1 }}</p>
+        <p style="font-family:var(--display); font-size:clamp(24px,2.6vw,34px); line-height:1.3; color:#b3ada3; margin:26px 0 0; letter-spacing:-0.005em; text-wrap:pretty;">{{ bio2 }}</p>
+        <p style="font-family:var(--display); font-size:clamp(24px,2.6vw,34px); line-height:1.3; color:#b3ada3; margin:26px 0 0; letter-spacing:-0.005em; text-wrap:pretty;">{{ bio3 }}</p>
+      </div>
+
+      <!-- bento: 1 large on top, 2 unequal below -->
+      <div style="display:flex; flex-direction:column; gap:18px;">
+        <!-- large top -->
+        <a href="projects/" style="position:relative; display:block; border:1px solid #e7e4de; border-radius:var(--card-radius); overflow:hidden; box-shadow:0 1px 2px rgba(0,0,0,0.02);" style-hover="border-color:#d9d4cb;">
+          <div style="height:300px; background:repeating-linear-gradient(135deg,#edeae4 0 10px,#f5f3ee 10px 20px); display:flex; align-items:center; justify-content:center;">
+            <span style="font-family:ui-monospace,Menlo,monospace; font-size:11px; letter-spacing:0.1em; color:#b3aea4; text-transform:uppercase;">app shot</span>
+          </div>
+          <div style="position:absolute; top:0; left:0; right:0; padding:15px 18px 30px; display:flex; justify-content:space-between; align-items:center; font-family:var(--ui); font-size:13px; color:#5d5952; background:linear-gradient(180deg,rgba(247,246,243,0.94) 0%,rgba(247,246,243,0) 100%);">
+            <span>Projects &middot; Field Notes</span><span style="font-size:14px;">&#8599;</span>
+          </div>
+        </a>
+        <!-- two unequal below -->
+        <div id="heroBento2" style="display:grid; grid-template-columns:1.5fr 1fr; gap:18px; align-items:stretch;">
+          <a href="thoughts/" style="display:flex; flex-direction:column; background:#fff; border:1px solid #e7e4de; border-radius:var(--card-radius); padding:18px; box-shadow:0 1px 2px rgba(0,0,0,0.02);" style-hover="border-color:#d9d4cb;">
+            <div style="display:flex; justify-content:space-between; align-items:center; font-family:var(--ui); font-size:13px; color:#8b867e;">
+              <span>Thoughts &middot; Blog</span><span style="font-size:14px;">&#8599;</span>
+            </div>
+            <div style="font-family:var(--display); font-size:25px; line-height:1.15; letter-spacing:-0.005em; margin:14px 0 8px; color:#1f1d1a;">{{ featThoughtTitle }}</div>
+            <div style="font-family:var(--ui); font-size:13.5px; line-height:1.5; color:#74706a; margin-top:auto;">{{ featThoughtBlurb }}</div>
+          </a>
+          <a href="reading/" style="display:flex; flex-direction:column; justify-content:center; background:#fff; border:1px solid #e7e4de; border-radius:var(--card-radius); padding:18px; box-shadow:0 1px 2px rgba(0,0,0,0.02);" style-hover="border-color:#d9d4cb;">
+            <div style="display:flex; justify-content:space-between; align-items:center; font-family:var(--ui); font-size:13px; color:#8b867e;">
+              <span>Reading</span><span style="font-size:14px;">&#8599;</span>
+            </div>
+            <div style="font-family:var(--display); font-size:23px; line-height:1.18; letter-spacing:-0.005em; margin:12px 0 4px; color:#1f1d1a;">{{ featBookTitle }}</div>
+            <div style="font-family:var(--ui); font-size:13px; color:#a39e95;">{{ featBookAuthor }}</div>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PROJECTS (3 featured) -->
+  <section id="projects" style="max-width:var(--mw); margin:0 auto; padding:74px 32px; border-top:var(--divider) solid #e7e4de; scroll-margin-top:74px;">
+    <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:20px;">
+      <h2 style="font-family:var(--display); font-size:clamp(28px,2.8vw,38px); margin:0; letter-spacing:-0.01em; color:#1f1d1a;">Projects</h2>
+      <a href="projects/" style="font-family:var(--ui); font-size:14px; color:#8b867e; transition:color .2s ease;" style-hover="color:#1f1d1a;">View all &rarr;</a>
+    </div>
+    <div id="projGrid" style="margin-top:26px; display:grid; grid-template-columns:repeat(3,1fr); gap:18px;">
+      <sc-for list="{{ projects }}" as="p" hint-placeholder-count="3">
+        <a href="projects/" style="display:block; background:#fff; border:1px solid #e7e4de; border-radius:var(--card-radius); overflow:hidden; box-shadow:0 1px 2px rgba(0,0,0,0.02);" style-hover="border-color:#d4cfc5; box-shadow:0 6px 18px rgba(0,0,0,0.05);">
+          <div style="position:relative; overflow:hidden; height:138px; background:repeating-linear-gradient(135deg,#edeae4 0 10px,#f5f3ee 10px 20px); display:flex; align-items:center; justify-content:center;">
+            <span style="font-family:ui-monospace,Menlo,monospace; font-size:11px; letter-spacing:0.1em; color:#b3aea4; text-transform:uppercase;">{{ p.art }}</span>{{ p.cover }}
+          </div>
+          <div style="padding:18px 20px 22px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; font-family:var(--ui); font-size:11.5px; letter-spacing:0.08em; text-transform:uppercase; color:#a39e95;">
+              <span>{{ p.cat }}</span><span style="font-size:14px;">&#8599;</span>
+            </div>
+            <div style="font-family:var(--display); font-size:26px; letter-spacing:-0.01em; margin:10px 0 8px; color:#1f1d1a;">{{ p.name }}</div>
+            <div style="font-family:var(--ui); font-size:14px; line-height:1.55; color:#74706a;">{{ p.blurb }}</div>
+          </div>
+        </a>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- THOUGHTS (preview, capped to 5) -->
+  <section id="thoughts" style="max-width:var(--mw); margin:0 auto; padding:74px 32px; border-top:var(--divider) solid #e7e4de; scroll-margin-top:74px;">
+    <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:20px;">
+      <h2 style="font-family:var(--display); font-size:clamp(28px,2.8vw,38px); margin:0; letter-spacing:-0.01em; color:#1f1d1a;">Thoughts</h2>
+      <a href="thoughts/" style="font-family:var(--ui); font-size:14px; color:#8b867e; transition:color .2s ease;" style-hover="color:#1f1d1a;">View all &rarr;</a>
+    </div>
+    <div style="margin-top:22px; border-top:1px solid #ece9e3;">
+      <sc-for list="{{ thoughts }}" as="t" hint-placeholder-count="5">
+        <a href="thoughts/" style="display:flex; align-items:baseline; justify-content:space-between; gap:20px; padding:18px 6px; border-bottom:1px solid #ece9e3; transition:background .2s ease;" style-hover="background:#fbfaf7;">
+          <div style="display:flex; align-items:baseline; gap:14px; min-width:0;">
+            <span style="font-family:var(--display); font-size:23px; letter-spacing:-0.005em; color:#1f1d1a;">{{ t.title }}</span>
+            <span style="font-family:var(--ui); font-size:10.5px; font-weight:600; letter-spacing:0.05em; text-transform:uppercase; color:#8b867e; background:#f1efe9; padding:3px 8px; border-radius:999px; flex:none;">{{ t.tag }}</span>
+          </div>
+          <span style="font-family:var(--ui); font-size:13.5px; color:#a39e95; flex:none;">{{ t.date }}</span>
+        </a>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- READING -->
+  <section id="reading" style="max-width:var(--mw); margin:0 auto; padding:74px 32px; border-top:var(--divider) solid #e7e4de; scroll-margin-top:74px;">
+    <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:20px;">
+      <h2 style="font-family:var(--display); font-size:clamp(28px,2.8vw,38px); margin:0; letter-spacing:-0.01em; color:#1f1d1a;">Reading List</h2>
+      <a href="reading/" style="font-family:var(--ui); font-size:14px; color:#8b867e; transition:color .2s ease;" style-hover="color:#1f1d1a;">View all &rarr;</a>
+    </div>
+    <div id="readGrid" style="margin-top:26px; display:grid; grid-template-columns:repeat(3,1fr); gap:14px;">
+      <sc-for list="{{ reading }}" as="r" hint-placeholder-count="6">
+        <a href="reading/" style="display:flex; gap:14px; align-items:flex-start; background:#fff; border:1px solid #e7e4de; border-radius:var(--card-radius); padding:16px 18px; transition:border-color .2s ease;" style-hover="border-color:#d4cfc5;">
+          <div style="flex:none; width:38px; height:38px; border-radius:9px; background:repeating-linear-gradient(135deg,#e9e6df 0 7px,#f1efe9 7px 14px);"></div>
+          <div style="min-width:0;">
+            <div style="font-family:var(--ui); font-weight:600; font-size:15px; line-height:1.3; color:#1f1d1a;">{{ r.title }}</div>
+            <div style="font-family:var(--ui); font-size:13px; color:#a39e95; margin-top:3px;">{{ r.source }}</div>
+            <div style="font-family:var(--ui); font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:#bbb6ac; margin-top:6px;">{{ r.cat }}</div>
+          </div>
+        </a>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- MISC -->
+  <section id="misc" style="max-width:var(--mw); margin:0 auto; padding:74px 32px; border-top:var(--divider) solid #e7e4de; scroll-margin-top:74px;">
+    <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:20px;">
+      <h2 style="font-family:var(--display); font-size:clamp(28px,2.8vw,38px); margin:0; letter-spacing:-0.01em; color:#1f1d1a;">Misc</h2>
+      <a href="misc/" style="font-family:var(--ui); font-size:14px; color:#8b867e; transition:color .2s ease;" style-hover="color:#1f1d1a;">View all &rarr;</a>
+    </div>
+    <div id="miscGrid" style="margin-top:26px; display:grid; grid-template-columns:repeat(3,1fr); gap:14px;">
+      <sc-for list="{{ misc }}" as="m" hint-placeholder-count="3">
+        <a href="{{ m.href }}" style="position:relative; display:block; height:210px; border-radius:var(--card-radius); overflow:hidden; border:1px solid #e7e4de; background:repeating-linear-gradient(135deg,#e9e6df 0 11px,#f1efe9 11px 22px); transition:border-color .2s ease;" style-hover="border-color:#d4cfc5;">
+          <span style="position:absolute; left:16px; bottom:36px; font-family:var(--ui); font-weight:600; font-size:15px; color:#3a3731;">{{ m.label }}</span>
+          <span style="position:absolute; left:16px; bottom:15px; font-family:var(--ui); font-size:12.5px; color:#7c776e;">{{ m.sub }}</span>
+        </a>
+      </sc-for>
+    </div>
+    <a href="misc/#restaurants" style="position:relative; display:flex; align-items:center; justify-content:space-between; gap:24px; margin-top:14px; height:122px; padding:0 28px; border-radius:var(--card-radius); overflow:hidden; border:1px solid #e7e4de; background:#fff; transition:border-color .2s ease;" style-hover="border-color:#d4cfc5;">
+      <div>
+        <div style="font-family:var(--ui); font-weight:600; font-size:16px; color:#1f1d1a;">Eating around Seattle</div>
+        <div style="font-family:var(--ui); font-size:13px; color:#9b968d; margin-top:3px;">Restaurant picks, pinned on an interactive map</div>
+      </div>
+      <div style="position:relative; flex:1; max-width:520px; height:64px; border-radius:10px; overflow:hidden; background:repeating-linear-gradient(135deg,#eceae4 0 9px,#f4f2ec 9px 18px);">
+        <span style="position:absolute; left:22%; top:38%; width:9px; height:9px; border-radius:50%; background:#c8623f;"></span>
+        <span style="position:absolute; left:46%; top:60%; width:9px; height:9px; border-radius:50%; background:#c8623f;"></span>
+        <span style="position:absolute; left:63%; top:30%; width:9px; height:9px; border-radius:50%; background:#c8623f;"></span>
+        <span style="position:absolute; left:80%; top:55%; width:9px; height:9px; border-radius:50%; background:#c8623f;"></span>
+      </div>
+    </a>
+  </section>
+
+  <dc-import name="SiteFooter" hint-size="100%,200px"></dc-import>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{ &quot;$preview&quot;: { &quot;width&quot;: 1180, &quot;height&quot;: 900 } }">
+// Logic lives in js/pages/Home.js (registered with the shared Site layer).
+class Component extends DCLogic {
+  state = Site.initialState('home');
+  componentDidMount(){ Site.mount(this, 'home'); }
+  componentDidUpdate(p){ Site.updated(this, 'home', p); }
+  componentWillUnmount(){ Site.unmount(this, 'home'); }
+  renderVals(){ return Site.render(this, 'home'); }
+}
+</script>
+</body>
+</html>
