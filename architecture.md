@@ -31,6 +31,17 @@ After a push, the **build-manifests** GitHub Action regenerates the folder
 indexes so new files appear. (Locally you can run it yourself —
 `node .github/scripts/build-manifests.mjs` — or just edit `manifest.json` by hand.)
 
+Each `manifest.json` is a **rich manifest**: an array of item objects baking in
+the frontmatter cards/lists need — `[{ "slug": "billbreak", "title": "Billbreak",
+"year": "2024", "cat": "iOS", "blurb": "…", "stack": ["Swift"] }, …]`. The Action
+reads every `index.md`'s frontmatter once (at push time) so the **browser doesn't
+have to** (it used to fetch every file on every visit just to title the cards —
+Home alone was ~28 fetches; now ~3). Full **bodies** load lazily, only when a
+modal/reader opens (`Site.item`). The browser also still accepts a legacy
+**slug-list** manifest (`["billbreak", …]`) — a hand-edited one works, it just
+costs the old per-file fetches. Images stay relative (resolved client-side), so
+manifests are host-independent.
+
 ---
 
 ## File layout
@@ -177,7 +188,10 @@ written literally in the template would make the browser eagerly fetch the
   (newest first) — `date:` if present, else `year:` (so thoughts sort by `date`,
   projects by `year`). Items with neither (books use `when:`/`status:`) keep
   their manifest order. **Thoughts** also support `pinned: true`, which floats a
-  post to the top and shows a bookmark icon on its card/list row.
+  post to the top and shows a bookmark icon on its card/list row. The Thoughts
+  **reader's Prev/Next** links walk this same sorted order (respecting the active
+  tag filter), so adding a post automatically slots into the sequence on push —
+  no hardcoded ordering. Bodies load lazily as you navigate.
 
 See `content/projects/_template/index.md` and `content/thoughts/_template/index.md`
 for the full annotated field list.
@@ -192,8 +206,16 @@ items:
   - title: The Garden and the Stream
     cat: Web
     source: hapgood
+    link: "https://example.com/essay"   # opens in a new tab on click
+    image: ./images/garden.png          # optional thumbnail (else placeholder)
 ---
 ```
+Articles, podcasts, and resources each support an optional **`link:`** (full URL —
+the row opens it in a new tab; omit for a no-op) and **`image:`** (a thumbnail
+shown in the icon/cover box; omit to keep the gradient placeholder). Drop list
+thumbnails in **`content/reading/images/`** and reference them `./images/<file>`
+(resolved relative to `content/reading/`, like any list `image`).
+
 (Books, projects, and thoughts use per-item **folders** instead — see above.)
 
 ---
@@ -271,7 +293,8 @@ Run the workflow manually from the **Actions** tab (`workflow_dispatch`).
 
 | Method | Purpose |
 |---|---|
-| `Site.collection(name)` | Load a per-item folder collection (`name` may be nested, e.g. `"reading/books"`): reads `manifest.json` of folder slugs, fetches each `<slug>/index.md` → sorted `[{slug, …frontmatter, body, image}]`. `image: ./x.png` resolves against the item's own folder. |
+| `Site.collection(name)` | Load a per-item folder collection (`name` may be nested, e.g. `"reading/books"`): reads `manifest.json` → sorted `[{slug, …frontmatter, image}]`. A **rich** manifest (array of objects, see below) is used as-is — no per-item fetch, `body` is omitted. A legacy **slug-list** manifest (array of strings) falls back to fetching+parsing each `<slug>/index.md` (and includes `body`). `image: ./x.png` resolves against the item's own folder at runtime either way. |
+| `Site.item(name, slug)` | Lazily fetch+parse one item's `index.md` → `{…frontmatter, body, image, _base}`. Used when a modal/reader needs the full **body** (rich manifests omit it): Projects modal, Thoughts reader. |
 | `Site.list(name, file)` | Load a single list file → `{items, meta, intro}`. |
 | `Site.page(name)` | Load `content/<name>/page.md` → `{data, body}`. |
 | `Site.data(file)` | Load `content/data/<file>`; `null` if absent (used for graceful fallback). |

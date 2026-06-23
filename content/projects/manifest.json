@@ -1,12 +1,163 @@
 [
-  "billbreak",
-  "field-notes",
-  "fields-of-chess",
-  "glyph",
-  "portfolio-v4",
-  "quiet-hours",
-  "shelf",
-  "snob",
-  "testing-for-doyun",
-  "tinybase"
+  {
+    "slug": "billbreak",
+    "title": "Billbreak",
+    "cat": "iOS",
+    "year": "2024",
+    "kind": "readme",
+    "art": "phone",
+    "action": "View",
+    "stack": [
+      "Swift",
+      "Vision",
+      "OCR"
+    ],
+    "link": "#",
+    "source": "#",
+    "blurb": "Split a messy restaurant bill in seconds, taxes and service included."
+  },
+  {
+    "slug": "field-notes",
+    "title": "Field Notes",
+    "cat": "Web app",
+    "year": "2026",
+    "kind": "readme",
+    "art": "note app",
+    "action": "Visit",
+    "stack": [
+      "React",
+      "IndexedDB",
+      "Local-first"
+    ],
+    "link": "#",
+    "source": "#",
+    "blurb": "A tiny tool for capturing thoughts before they evaporate. **Local-first**, keyboard-driven."
+  },
+  {
+    "slug": "fields-of-chess",
+    "title": "Fields of Chess",
+    "cat": "Generative",
+    "year": "2024",
+    "kind": "readme",
+    "art": "poster",
+    "action": "View",
+    "stack": [
+      "Canvas",
+      "p5.js",
+      "PGN"
+    ],
+    "link": "#",
+    "source": "#",
+    "blurb": "Generative posters built from the moves of a single chess game."
+  },
+  {
+    "slug": "glyph",
+    "title": "Glyph",
+    "cat": "Type tool",
+    "year": "2023",
+    "kind": "readme",
+    "art": "type",
+    "action": "View",
+    "stack": [
+      "Variable fonts",
+      "Canvas"
+    ],
+    "link": "#",
+    "source": "#",
+    "blurb": "A playground for fiddling with variable fonts in the browser."
+  },
+  {
+    "slug": "portfolio-v4",
+    "title": "Portfolio v4",
+    "cat": "This site",
+    "year": "2026",
+    "kind": "readme",
+    "art": "website",
+    "action": "You're here",
+    "stack": [
+      "HTML",
+      "CSS",
+      "Taste"
+    ],
+    "blurb": "The thing you are looking at right now — a small **digital garden**."
+  },
+  {
+    "slug": "quiet-hours",
+    "title": "Quiet Hours",
+    "cat": "Essay",
+    "year": "2022",
+    "kind": "essay",
+    "art": "concept",
+    "action": "Read",
+    "essayDate": "March 4, 2022",
+    "essayLead": "I built a lot of software that begged for attention. Quiet Hours was my attempt to build something that didn't.",
+    "blurb": "A concept for software that respects your attention by default."
+  },
+  {
+    "slug": "shelf",
+    "title": "Shelf",
+    "cat": "iOS",
+    "year": "2025",
+    "kind": "readme",
+    "art": "shelf",
+    "action": "App Store",
+    "stack": [
+      "Swift",
+      "SwiftUI",
+      "CloudKit"
+    ],
+    "link": "#",
+    "source": "#",
+    "blurb": "Track what you read, simply — no streaks, no guilt, no social feed."
+  },
+  {
+    "slug": "snob",
+    "title": "Snob",
+    "cat": "Web app",
+    "year": "2023",
+    "kind": "readme",
+    "art": "web",
+    "action": "Visit",
+    "stack": [
+      "Next.js",
+      "Postgres"
+    ],
+    "link": "#",
+    "source": "#",
+    "blurb": "A coffee log for people who are a little too into their pour-over."
+  },
+  {
+    "slug": "testing-for-doyun",
+    "title": "doyun want to see this work",
+    "cat": "Hardware",
+    "year": "2026",
+    "kind": "readme",
+    "art": "note app",
+    "action": "Visit",
+    "stack": [
+      "React",
+      "IndexedDB",
+      "Local-first"
+    ],
+    "link": "#",
+    "source": "#",
+    "blurb": "A tiny tool for capturing doyuns dog."
+  },
+  {
+    "slug": "tinybase",
+    "title": "Tinybase",
+    "cat": "Open source",
+    "year": "2025",
+    "kind": "readme",
+    "art": "sync",
+    "action": "GitHub",
+    "stack": [
+      "TypeScript",
+      "CRDTs",
+      "WASM"
+    ],
+    "link": "#",
+    "source": "#",
+    "blurb": "Experiments with **local-first** data and quiet background sync."
+  }
 ]

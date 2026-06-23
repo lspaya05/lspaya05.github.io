@@ -1,4 +1,16 @@
 [
-  "burke-gilman-trail",
-  "lake-washington-loop"
+  {
+    "slug": "burke-gilman-trail",
+    "title": "Burke-Gilman Trail",
+    "distance": "45 km",
+    "link": "https://www.strava.com/",
+    "image": "./route.svg"
+  },
+  {
+    "slug": "lake-washington-loop",
+    "title": "Lake Washington Loop",
+    "distance": "84 km",
+    "link": "https://www.strava.com/",
+    "image": "./route.svg"
+  }
 ]

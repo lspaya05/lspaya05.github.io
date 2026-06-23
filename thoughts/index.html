@@ -116,27 +116,23 @@
             {{ reader.body }}
           </div>
 
-          <!-- divider + coda -->
-          <div style="display:flex; justify-content:center; margin:42px 0;"><div style="width:48px; height:1px; background:#d8d3ca;"></div></div>
-          <p style="font-family:var(--display); font-size:22px; line-height:1.5; color:#1f1d1a; text-align:center; max-width:500px; margin:0 auto; text-wrap:pretty;">{{ reader.coda }}</p>
-
-          <!-- share -->
-          <div style="display:flex; align-items:center; justify-content:center; gap:12px; margin:46px 0 0;">
-            <span style="font-family:var(--ui); font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:#a39e95;">Share</span>
-            <sc-for list="{{ shares }}" as="s" hint-placeholder-count="3">
-              <a href="#" style="display:flex; align-items:center; justify-content:center; width:34px; height:34px; border-radius:50%; border:1px solid #e7e4de; background:#fff; font-family:var(--ui); font-size:12.5px; font-weight:600; color:#5d5952; transition:border-color .2s ease, color .2s ease;" style-hover="border-color:#cfc9bf; color:#1f1d1a;">{{ s }}</a>
-            </sc-for>
-          </div>
-
-          <!-- prev / next -->
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:34px; padding-top:24px; border-top:1px solid #ece9e3;">
+          <!-- prev / next (navigate within the live, sorted list) -->
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:42px; padding-top:24px; border-top:1px solid #ece9e3;">
             <div style="font-family:var(--ui);">
-              <div style="font-size:11px; letter-spacing:0.07em; text-transform:uppercase; color:#a39e95;">&larr; Previous</div>
-              <div style="font-family:var(--display); font-size:18px; letter-spacing:-0.005em; color:#1f1d1a; margin-top:5px; line-height:1.25;">{{ reader.prev }}</div>
+              <sc-if value="{{ reader.hasPrev }}" hint-placeholder-val="{{ true }}">
+                <a href="#" onClick="{{ reader.openPrev }}" style="display:block; text-decoration:none; cursor:pointer;" style-hover="opacity:0.7;">
+                  <div style="font-size:11px; letter-spacing:0.07em; text-transform:uppercase; color:#a39e95;">&larr; Previous</div>
+                  <div style="font-family:var(--display); font-size:18px; letter-spacing:-0.005em; color:#1f1d1a; margin-top:5px; line-height:1.25;">{{ reader.prevTitle }}</div>
+                </a>
+              </sc-if>
             </div>
             <div style="font-family:var(--ui); text-align:right;">
-              <div style="font-size:11px; letter-spacing:0.07em; text-transform:uppercase; color:#a39e95;">Next &rarr;</div>
-              <div style="font-family:var(--display); font-size:18px; letter-spacing:-0.005em; color:#1f1d1a; margin-top:5px; line-height:1.25;">{{ reader.next }}</div>
+              <sc-if value="{{ reader.hasNext }}" hint-placeholder-val="{{ true }}">
+                <a href="#" onClick="{{ reader.openNext }}" style="display:block; text-decoration:none; cursor:pointer;" style-hover="opacity:0.7;">
+                  <div style="font-size:11px; letter-spacing:0.07em; text-transform:uppercase; color:#a39e95;">Next &rarr;</div>
+                  <div style="font-family:var(--display); font-size:18px; letter-spacing:-0.005em; color:#1f1d1a; margin-top:5px; line-height:1.25;">{{ reader.nextTitle }}</div>
+                </a>
+              </sc-if>
             </div>
           </div>
         </div>

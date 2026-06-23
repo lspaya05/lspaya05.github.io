@@ -1,12 +1,72 @@
 [
-  "a-pattern-language",
-  "how-to-do-nothing",
-  "pilgrim-at-tinker-creek",
-  "several-short-sentences",
-  "slowness",
-  "tao-te-ching",
-  "the-mezzanine",
-  "the-overstory",
-  "the-timeless-way-of-building",
-  "why-we-sleep"
+  {
+    "slug": "a-pattern-language",
+    "title": "A Pattern Language",
+    "author": "Christopher Alexander",
+    "status": "Shelf",
+    "when": "Someday"
+  },
+  {
+    "slug": "how-to-do-nothing",
+    "title": "How to Do Nothing",
+    "author": "Jenny Odell",
+    "status": "Read",
+    "when": "Jun 2026"
+  },
+  {
+    "slug": "pilgrim-at-tinker-creek",
+    "title": "Pilgrim at Tinker Creek",
+    "author": "Annie Dillard",
+    "status": "Reading",
+    "when": "Now"
+  },
+  {
+    "slug": "several-short-sentences",
+    "title": "Several Short Sentences",
+    "author": "Verlyn Klinkenborg",
+    "status": "Read",
+    "when": "Mar 2026"
+  },
+  {
+    "slug": "slowness",
+    "title": "Slowness",
+    "author": "Milan Kundera",
+    "status": "Shelf",
+    "when": "Someday"
+  },
+  {
+    "slug": "tao-te-ching",
+    "title": "Tao Te Ching",
+    "author": "Lao Tzu",
+    "status": "Re-read",
+    "when": "Jan 2026"
+  },
+  {
+    "slug": "the-mezzanine",
+    "title": "The Mezzanine",
+    "author": "Nicholson Baker",
+    "status": "Read",
+    "when": "Feb 2026"
+  },
+  {
+    "slug": "the-overstory",
+    "title": "The Overstory",
+    "author": "Richard Powers",
+    "status": "Read",
+    "when": "Apr 2026"
+  },
+  {
+    "slug": "the-timeless-way-of-building",
+    "title": "The Timeless Way of Building",
+    "author": "Christopher Alexander",
+    "status": "Reading",
+    "when": "Now"
+  },
+  {
+    "slug": "why-we-sleep",
+    "title": "Why We Sleep",
+    "author": "Matthew Walker",
+    "status": "Shelf",
+    "when": "Someday"
+  }
 ]

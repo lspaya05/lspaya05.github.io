@@ -38,17 +38,37 @@
       var seg = Site.segmented(self, { def: "list" });
       var modal = Site.modalControls(self, "reader");
 
-      var items = filtered.map(function (t, i, arr) {
-        var payload = assign({}, t, {
-          readTime: t.readTime || ((3 + (i % 4)) + " min read"),
-          coda: t.coda || "Mostly I write these to find out what I actually think.",
-          prev: arr[i - 1] ? arr[i - 1].title : "—",
-          next: arr[i + 1] ? arr[i + 1].title : "—"
-        });
+      // Ordered payloads — same order the list shows (sortItems: pinned first,
+      // then date desc). prev/next navigation walks THIS array, so it tracks the
+      // live ordering automatically (a new thought re-sorts on the next push).
+      var payloads = filtered.map(function (t, i) {
         return assign({}, t, {
-          excerpt: Site.renderInline(t.excerpt),
-          pin: t.pinned ? pinIcon() : null,
-          open: modal.open(payload)
+          readTime: t.readTime || ((3 + (i % 4)) + " min read")
+        });
+      });
+
+      // Open the reader for a payload, then lazily fetch + merge its body
+      // (rich manifests omit bodies). Reused by cards AND prev/next.
+      function openReader(payload) {
+        return function (e) {
+          if (e && e.preventDefault) e.preventDefault();
+          self.setState({ reader: payload });
+          if (payload.body == null) {
+            Site.item("thoughts", payload.slug).then(function (full) {
+              self.setState(function (s) {
+                return s.reader && s.reader.slug === payload.slug
+                  ? { reader: assign({}, payload, { body: full.body }) } : null;
+              });
+            }).catch(function (err) { console.error("[thoughts] body load failed", err); });
+          }
+        };
+      }
+
+      var items = payloads.map(function (p) {
+        return assign({}, p, {
+          excerpt: Site.renderInline(p.excerpt),
+          pin: p.pinned ? pinIcon() : null,
+          open: openReader(p)
         });
       });
 
@@ -65,15 +85,26 @@
       });
 
       var r = self.state.reader || {};
+      // Locate the open thought in the current ordering to wire prev/next.
+      var idx = -1;
+      for (var j = 0; j < payloads.length; j++) {
+        if (payloads[j].slug === r.slug) { idx = j; break; }
+      }
+      var prevP = idx > 0 ? payloads[idx - 1] : null;
+      var nextP = idx >= 0 && idx < payloads.length - 1 ? payloads[idx + 1] : null;
       var reader = assign({}, r, {
         excerpt: r.excerpt != null ? Site.renderInline(r.excerpt) : null,
-        body: r.body ? Site.renderMarkdown(r.body) : null
+        body: r.body ? Site.renderMarkdown(r.body) : null,
+        hasPrev: !!prevP, hasNext: !!nextP,
+        prevTitle: prevP ? prevP.title : "",
+        nextTitle: nextP ? nextP.title : "",
+        openPrev: prevP ? openReader(prevP) : null,
+        openNext: nextP ? openReader(nextP) : null
       });
 
       return assign({
         items: items,
         tagOptions: tagOptions,
-        shares: ["X", "f", "in"],
         readerOpen: modal.isOpen,
         reader: reader,
         closeReader: modal.close,

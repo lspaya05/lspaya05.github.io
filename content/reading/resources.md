@@ -1,9 +1,13 @@
 ---
 # ECE resources. type: Course | Textbook | Channel | Tool
+#   link:  full URL — the card opens it in a new tab when clicked.
+#   image: ./images/<file> (relative to content/reading/) — icon thumbnail.
 items:
   - title: 6.002 Circuits & Electronics
     by: MIT OpenCourseWare
     type: Course
+    link: "https://ocw.mit.edu/courses/6-002-circuits-and-electronics-spring-2007/"
+    # image: ./images/mit.png
   - title: The Art of Electronics
     by: Horowitz & Hill
     type: Textbook

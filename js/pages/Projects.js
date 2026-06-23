@@ -24,7 +24,9 @@
       var seg = Site.segmented(self, { def: "blocks" });
       var modal = Site.modalControls(self, "open");
 
-      // card list — blurb rendered as inline markdown; click stores the RAW item.
+      // card list — blurb rendered as inline markdown. Click opens the modal
+      // immediately with the manifest metadata, then lazily fetches the item's
+      // index.md and merges the body in (rich manifests omit bodies).
       // (frontmatter uses `title`; the template binds `name`.)
       var projects = items.map(function (p) {
         var name = p.name || p.title;
@@ -32,7 +34,17 @@
           name: name,
           blurb: Site.renderInline(p.blurb),
           cover: Site.cover(p.image, name),
-          open: modal.open(p)
+          open: function (e) {
+            if (e && e.preventDefault) e.preventDefault();
+            self.setState({ open: p });
+            if (p.body == null) {
+              Site.item("projects", p.slug).then(function (full) {
+                self.setState(function (s) {
+                  return s.open && s.open.slug === p.slug ? { open: full } : null;
+                });
+              }).catch(function (err) { console.error("[projects] body load failed", err); });
+            }
+          }
         });
       });
 

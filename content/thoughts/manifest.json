@@ -1,10 +1,67 @@
 [
-  "3am-idea-about-maps",
-  "digital-notebook",
-  "naming-things",
-  "reading-as-thinking",
-  "shipping-nothing",
-  "slower-software",
-  "small-obsessions",
-  "tab-graveyard"
+  {
+    "slug": "3am-idea-about-maps",
+    "title": "A 3am idea about maps",
+    "tag": "Random ideas",
+    "date": "Mar 2026",
+    "pinned": false,
+    "excerpt": "What if a map remembered where you stood still, not just where you walked?"
+  },
+  {
+    "slug": "digital-notebook",
+    "title": "On keeping a digital notebook",
+    "tag": "Blog",
+    "date": "Apr 2026",
+    "pinned": false,
+    "excerpt": "A few notes on writing things down before they evaporate — and why the messy middle is the point.",
+    "coda": "Mostly I write these to find out what I actually think."
+  },
+  {
+    "slug": "naming-things",
+    "title": "Naming things is the whole job",
+    "tag": "Random ideas",
+    "date": "Dec 2025",
+    "pinned": false,
+    "excerpt": "Every hard problem I've had this year was secretly a naming problem."
+  },
+  {
+    "slug": "reading-as-thinking",
+    "title": "Reading as a way of thinking",
+    "tag": "Essay",
+    "date": "Nov 2025",
+    "pinned": false,
+    "excerpt": "Notes on marginalia, re-reading, and treating books as conversations."
+  },
+  {
+    "slug": "shipping-nothing",
+    "title": "What I learned shipping nothing",
+    "tag": "Essay",
+    "date": "Feb 2026",
+    "pinned": false,
+    "excerpt": "A year of unfinished side projects, and the surprisingly useful things they left behind."
+  },
+  {
+    "slug": "slower-software",
+    "title": "A quiet argument for slower software",
+    "tag": "Blog",
+    "date": "Jan 2026",
+    "pinned": false,
+    "excerpt": "Fewer notifications, less urgency, more room to think. A small manifesto."
+  },
+  {
+    "slug": "small-obsessions",
+    "title": "Small obsessions are underrated",
+    "tag": "Essay",
+    "date": "Mar 2026",
+    "pinned": false,
+    "excerpt": "The case for going embarrassingly deep on something that doesn't matter to anyone else."
+  },
+  {
+    "slug": "tab-graveyard",
+    "title": "The tab graveyard",
+    "tag": "Blog",
+    "date": "Oct 2025",
+    "pinned": false,
+    "excerpt": "On the 200 open tabs I will never read, and making peace with letting them go."
+  }
 ]

@@ -31,16 +31,31 @@
       var bookCards = books.map(function (b) {
         return assign({}, b, { cover: Site.cover(b.image, b.title) });
       });
+      // resources / podcasts / articles: each item may carry an `image:`
+      // (relative to content/reading/, resolved by Site.list) shown via a
+      // {{ x.cover }} slot, and a `link:` that makes the row open a website.
+      function decorate(list) {
+        return (list || []).map(function (it) {
+          return assign({}, it, {
+            cover: Site.cover(it.image, it.title),
+            link: it.link || "#"
+          });
+        });
+      }
       // book notes / article fields may use inline markdown
       var podcasts = (d.podcasts || []).map(function (p) {
-        return assign({}, p, { note: Site.renderInline(p.note) });
+        return assign({}, p, {
+          note: Site.renderInline(p.note),
+          cover: Site.cover(p.image, p.title),
+          link: p.link || "#"
+        });
       });
       return assign({
         books: bookCards,
         booksCount: read + " read this year",
-        resources: d.resources || [],
+        resources: decorate(d.resources),
         podcasts: podcasts,
-        articles: d.articles || [],
+        articles: decorate(d.articles),
         heroIntro: Site.renderInline((d.copy || {}).hero || "")
       }, seg);
     }

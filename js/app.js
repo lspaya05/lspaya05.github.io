@@ -204,14 +204,34 @@
   }
   // Per-item collection. Each item is its own folder: content/<name>/<slug>/,
   // with index.md the content and any co-located assets (cover.png, etc.).
-  // manifest.json lists the folder names (slugs).
+  //
+  // manifest.json is either:
+  //   - a RICH manifest (array of {slug, ...frontmatter}, emitted by
+  //     build-manifests.mjs) → build items straight from it; no per-item fetch.
+  //     Bodies load lazily via item() only when a modal/reader opens.
+  //   - a SLUG LIST (array of strings, the old shape / a hand-edited manifest)
+  //     → fall back to fetching+parsing every index.md.
+  // Either way: still sortItems, still resolve images at runtime (host-independent).
   function collection(name) {
     var base = "content/" + name + "/";
     return loadVendors()
       .then(function () { return fetchJSON(base + "manifest.json"); })
       .then(function (manifest) {
-        var slugs = Array.isArray(manifest) ? manifest : (manifest.items || []);
-        return Promise.all(slugs.map(function (slug) {
+        var entries = Array.isArray(manifest) ? manifest : (manifest.items || []);
+        var rich = entries.length && typeof entries[0] === "object";
+        if (rich) {
+          return entries.map(function (entry) {
+            var slug = entry.slug;
+            var itemBase = base + encodeURIComponent(slug) + "/";
+            var item = {};
+            for (var k in entry) item[k] = entry[k];
+            item.slug = slug;
+            item._base = itemBase;
+            item.image = resolveAsset(itemBase, entry.image);
+            return item;   // body left undefined — fetched lazily via item()
+          });
+        }
+        return Promise.all(entries.map(function (slug) {
           var itemBase = base + encodeURIComponent(slug) + "/";
           return fetchText(itemBase + "index.md").then(function (text) {
             var d = parseDoc(text);
@@ -226,6 +246,25 @@
         }));
       })
       .then(sortItems);
+  }
+
+  // Lazily load one item's full index.md (body + frontmatter) on demand — used
+  // when a modal/reader opens, since rich manifests omit the body. Returns the
+  // resolved item ({...frontmatter, body, _base, image}).
+  function item(name, slug) {
+    var itemBase = "content/" + name + "/" + encodeURIComponent(slug) + "/";
+    return loadVendors()
+      .then(function () { return fetchText(itemBase + "index.md"); })
+      .then(function (text) {
+        var d = parseDoc(text);
+        var it = {};
+        for (var k in d.data) it[k] = d.data[k];
+        it.slug = slug;
+        it.body = d.body;
+        it._base = itemBase;
+        it.image = resolveAsset(itemBase, d.data.image);
+        return it;
+      });
   }
 
   // Single multi-entry file (books/articles/etc.). Frontmatter holds `items:`,
@@ -381,7 +420,7 @@
     assign: assign,
     // content loading
     loadVendors: loadVendors, parseDoc: parseDoc, config: config,
-    collection: collection, list: list, page: page, data: data,
+    collection: collection, item: item, list: list, page: page, data: data,
     // markdown + images
     renderMarkdown: renderMarkdown, renderInline: renderInline, cover: cover,
     // ui helpers
