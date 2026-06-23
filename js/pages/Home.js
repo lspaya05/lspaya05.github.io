@@ -41,14 +41,9 @@
       });
       var ft = (d.thoughts || [])[0] || {};
       var fb = (d.books || [])[0] || {};
-      var misc = copy.misc_tiles || [
-        { label: "People who inspire me", sub: "A living list",     href: "misc/#people" },
-        { label: "Pictures",             sub: "All shot on iPhone", href: "misc/#pictures" },
-        { label: "Biking",               sub: "See latest ride",    href: "misc/#biking" }
-      ];
 
       return {
-        projects: projects, thoughts: thoughts, reading: reading, misc: misc,
+        projects: projects, thoughts: thoughts, reading: reading,
         bio1: Site.renderInline(copy.bio1 || ""),
         bio2: Site.renderInline(copy.bio2 || ""),
         bio3: Site.renderInline(copy.bio3 || ""),

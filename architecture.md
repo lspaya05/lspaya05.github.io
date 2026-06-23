@@ -18,9 +18,12 @@ page templates.
 | Add a project | Copy the `content/projects/_template/` folder → `content/projects/my-thing/` (keep `index.md`), edit, drop any images in the folder, push. |
 | Add a blog post / thought | Copy `content/thoughts/_template/` → `content/thoughts/my-post/`, edit `index.md`, push. |
 | Add a book | Copy `content/reading/books/_template/` → `content/reading/books/<slug>/`, edit `index.md`, drop a `cover.jpg` in the folder. |
-| Add an article / podcast / resource / restaurant | Add an entry under `items:` in the relevant single list file (e.g. `content/reading/articles.md`). |
+| Add an article / podcast / resource | Add an entry under `items:` in the relevant single list file (e.g. `content/reading/articles.md`). |
+| Add a restaurant pin | Add an entry under `items:` in `content/misc/restaurants/index.md` (the map itself is `restaurants/map.html`). |
+| Add a biking ride | Copy `content/misc/rides/_template/` → `rides/<slug>/`, edit `index.md`, drop a route image in the folder. |
 | Edit page copy (hero, intros, people list) | Edit the `content/<page>/page.md` frontmatter. |
-| Change nav, brand, footer, social links | Edit `content/site.config.json`. |
+| Change footer text / social links | Edit `content/footer/page.md`. |
+| Change nav or brand | Edit `content/site.config.json`. |
 | Add a whole new tab | See **Adding a new tab** below. |
 | Use bold/italic/links/images/video | Just write Markdown — it renders everywhere (see **Markdown**). |
 
@@ -48,7 +51,7 @@ _template.dc.html           # copy to <newtab>/index.html to create a tab
 # Shared components MUST stay at the site root (the runtime fetches them as
 # ./<Name>.dc.html relative to <base>); they're never shown in a URL anyway:
 SiteNav.dc.html             # nav — renders from site.config.json
-SiteFooter.dc.html          # footer — renders from site.config.json
+SiteFooter.dc.html          # footer — renders from content/footer/page.md
 
 js/
   app.js                    # window.Site: content loading, markdown, plumbing, UI helpers
@@ -68,13 +71,15 @@ content/
   reading/                  # LIST files: resources.md podcasts.md articles.md + page.md
     books/                  # PER-ITEM FOLDERS (+ manifest.json)
       _template/index.md   pilgrim-at-tinker-creek/index.md   …
-  misc/                     # page.md (copy + fallbacks) + restaurants.md (map pins)
-  data/                     # biking.json (Strava) + pictures.json (Photos) —
-                            #   committed placeholders, overwritten by the prefetch Action
+  misc/                     # page.md (copy + fallbacks)
+    rides/                  #   PER-ITEM FOLDERS — curated biking rides
+    restaurants/            #   index.md (pin list) + map.html (My Maps embed)
+  data/                     # pictures.json (Google Photos) — committed
+                            #   placeholder, overwritten by the prefetch Action
 
 .github/
   workflows/ build-manifests.yml  prefetch-data.yml
-  scripts/   build-manifests.mjs  strava.mjs  photos.mjs
+  scripts/   build-manifests.mjs  photos.mjs
 ```
 
 ---
@@ -158,10 +163,11 @@ written literally in the template would make the browser eagerly fetch the
 - **Images**: set `image: ./cover.png` in frontmatter (co-locate the file in the
   same folder), an absolute `/path`, or a full URL. Omit it to keep the design's
   placeholder gradient.
-- **Ordering**: per-item collections sort by `order:` (ascending) if present,
-  else by `date:` (descending). `date` can be any display string for thoughts
-  (sorting falls back to file order if dates aren't comparable — use `order:` to
-  be explicit).
+- **Ordering**: per-item collections sort by a date-like key **descending**
+  (newest first) — `date:` if present, else `year:` (so thoughts sort by `date`,
+  projects by `year`). Items with neither (books use `when:`/`status:`) keep
+  their manifest order. **Thoughts** also support `pinned: true`, which floats a
+  post to the top and shows a bookmark icon on its card/list row.
 
 See `content/projects/_template/index.md` and `content/thoughts/_template/index.md`
 for the full annotated field list.
@@ -190,15 +196,23 @@ items:
   "sections": [
     { "key": "home", "label": "Home", "href": "." },
     { "key": "projects", "label": "Projects", "href": "projects/" }
-  ],
-  "footer": {
-    "tagline": "…",
-    "socials": [{ "label": "GitHub", "href": "https://…" }]
-  }
+  ]
 }
 ```
 `sections` drives the nav (order + active highlight via each page's
-`active="<key>"`). Footer socials are matched by `label` (GitHub / LinkedIn / Email).
+`active="<key>"`).
+
+### content/footer/page.md
+The footer (every page) renders from this file's frontmatter:
+```yaml
+---
+tagline: A line under the social icons.
+github: https://github.com/you
+linkedin: "#"
+email: mailto:you@example.com
+---
+```
+The three icons (GitHub / LinkedIn / Email) are fixed; just set their hrefs.
 
 ---
 
@@ -223,16 +237,9 @@ template/module on `Projects` — including its modal.)
 ## Integrations (GitHub Actions)
 
 Static hosting can't hold secrets, so a scheduled Action prefetches data into
-`content/data/*.json`; the browser only ever reads plain JSON. Both steps
-**skip themselves** if their secrets aren't set, so nothing breaks before setup.
-Until then, the pages use the `*_fallback` values in `content/misc/page.md`
-(and the committed sample `biking.json`).
-
-### Strava → `biking.json`  (Misc "Biking" block)
-Repo **Settings → Secrets and variables → Actions**:
-`STRAVA_CLIENT_ID`, `STRAVA_CLIENT_SECRET`, `STRAVA_REFRESH_TOKEN`.
-Get a refresh token by creating an API app at <https://www.strava.com/settings/api>
-and running the OAuth flow once with scope `activity:read_all`.
+`content/data/*.json`; the browser only ever reads plain JSON. The step
+**skips itself** if its secrets aren't set, so nothing breaks before setup.
+Until then, the page uses the `*_fallback` values in `content/misc/page.md`.
 
 ### Google Photos → `pictures.json`  (Misc "Pictures" slideshow)
 Secrets: `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `GOOGLE_REFRESH_TOKEN`,
@@ -242,7 +249,11 @@ capture a refresh token with scope `photoslibrary.readonly`.
 if images break, run the workflow more often or change `photos.mjs` to download
 the bytes into `assets/photos/` and emit local paths.
 
-Run either workflow manually from the **Actions** tab (`workflow_dispatch`).
+Run the workflow manually from the **Actions** tab (`workflow_dispatch`).
+
+> **Biking** is no longer a Strava integration — it's a curated collection.
+> Add a ride by copying `content/misc/rides/_template/` → `rides/<slug>/` with an
+> `index.md` (name, distance, click-through `link:`) and a route image.
 
 ---
 

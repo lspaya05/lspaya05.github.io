@@ -2,7 +2,6 @@
 title: Shelf
 cat: iOS
 year: "2025"
-order: 2
 kind: readme
 art: shelf
 action: App Store

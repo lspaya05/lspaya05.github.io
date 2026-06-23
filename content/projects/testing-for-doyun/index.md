@@ -2,7 +2,6 @@
 title: doyun want to see this work 
 cat: Hardware
 year: "2026"
-order: 1
 kind: readme
 art: note app
 action: Visit

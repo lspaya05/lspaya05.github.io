@@ -2,7 +2,7 @@
 title: A 3am idea about maps
 tag: Random ideas
 date: "Mar 2026"
-order: 3
+pinned: false
 excerpt: What if a map remembered where you stood still, not just where you walked?
 ---
 Every map shows movement — routes, paths, the line from A to B. None of them show *stillness*.

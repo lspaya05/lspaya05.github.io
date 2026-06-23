@@ -2,7 +2,7 @@
 title: A quiet argument for slower software
 tag: Blog
 date: "Jan 2026"
-order: 5
+pinned: false
 excerpt: Fewer notifications, less urgency, more room to think. A small manifesto.
 ---
 Software learned to be loud because loud was measurable. Engagement, retention, the red dot. But the things I actually value from a tool are quiet: it's *there* when I need it and invisible when I don't.

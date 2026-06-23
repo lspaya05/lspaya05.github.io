@@ -146,34 +146,6 @@
     </div>
   </section>
 
-  <!-- MISC -->
-  <section id="misc" style="max-width:var(--mw); margin:0 auto; padding:74px 32px; border-top:var(--divider) solid #e7e4de; scroll-margin-top:74px;">
-    <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:20px;">
-      <h2 style="font-family:var(--display); font-size:clamp(28px,2.8vw,38px); margin:0; letter-spacing:-0.01em; color:#1f1d1a;">Misc</h2>
-      <a href="misc/" style="font-family:var(--ui); font-size:14px; color:#8b867e; transition:color .2s ease;" style-hover="color:#1f1d1a;">View all &rarr;</a>
-    </div>
-    <div id="miscGrid" style="margin-top:26px; display:grid; grid-template-columns:repeat(3,1fr); gap:14px;">
-      <sc-for list="{{ misc }}" as="m" hint-placeholder-count="3">
-        <a href="{{ m.href }}" style="position:relative; display:block; height:210px; border-radius:var(--card-radius); overflow:hidden; border:1px solid #e7e4de; background:repeating-linear-gradient(135deg,#e9e6df 0 11px,#f1efe9 11px 22px); transition:border-color .2s ease;" style-hover="border-color:#d4cfc5;">
-          <span style="position:absolute; left:16px; bottom:36px; font-family:var(--ui); font-weight:600; font-size:15px; color:#3a3731;">{{ m.label }}</span>
-          <span style="position:absolute; left:16px; bottom:15px; font-family:var(--ui); font-size:12.5px; color:#7c776e;">{{ m.sub }}</span>
-        </a>
-      </sc-for>
-    </div>
-    <a href="misc/#restaurants" style="position:relative; display:flex; align-items:center; justify-content:space-between; gap:24px; margin-top:14px; height:122px; padding:0 28px; border-radius:var(--card-radius); overflow:hidden; border:1px solid #e7e4de; background:#fff; transition:border-color .2s ease;" style-hover="border-color:#d4cfc5;">
-      <div>
-        <div style="font-family:var(--ui); font-weight:600; font-size:16px; color:#1f1d1a;">Eating around Seattle</div>
-        <div style="font-family:var(--ui); font-size:13px; color:#9b968d; margin-top:3px;">Restaurant picks, pinned on an interactive map</div>
-      </div>
-      <div style="position:relative; flex:1; max-width:520px; height:64px; border-radius:10px; overflow:hidden; background:repeating-linear-gradient(135deg,#eceae4 0 9px,#f4f2ec 9px 18px);">
-        <span style="position:absolute; left:22%; top:38%; width:9px; height:9px; border-radius:50%; background:#c8623f;"></span>
-        <span style="position:absolute; left:46%; top:60%; width:9px; height:9px; border-radius:50%; background:#c8623f;"></span>
-        <span style="position:absolute; left:63%; top:30%; width:9px; height:9px; border-radius:50%; background:#c8623f;"></span>
-        <span style="position:absolute; left:80%; top:55%; width:9px; height:9px; border-radius:50%; background:#c8623f;"></span>
-      </div>
-    </a>
-  </section>
-
   <dc-import name="SiteFooter" hint-size="100%,200px"></dc-import>
 
 </div>

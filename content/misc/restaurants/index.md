@@ -1,5 +1,6 @@
 ---
-# Restaurant pins for the "Eating around Seattle" map block.
+# Restaurant list shown beside the map in the Misc "Eating around Seattle" block.
+# The map itself lives next to this file in map.html (a Google My Maps embed).
 items:
   - name: Communión
     meta: Hillman City · New American

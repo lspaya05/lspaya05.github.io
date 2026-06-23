@@ -25,6 +25,9 @@
   ::-webkit-scrollbar{width:10px;} ::-webkit-scrollbar-thumb{background:#dcd8d0; border-radius:8px;} ::-webkit-scrollbar-track{background:transparent;}
   @keyframes mfade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
   [style*="--card-radius"]:hover:not([style*="repeating-linear"]){ background:#f1efe9 !important; }
+  /* full-bleed the static map.html iframe injected into the restaurants panel */
+  #restaurants .md{position:absolute; inset:0; margin:0;}
+  #restaurants .md iframe{height:100%; aspect-ratio:auto; margin:0; border:0; border-radius:0; background:#000;}
   @media (max-width:820px){ #miscBento{grid-template-columns:1fr !important;} #miscBento > div{grid-column:auto !important;} }
 </style>
 </helmet>
@@ -72,32 +75,26 @@
         </div>
       </div>
 
-      <!-- BIKING (narrow) -->
+      <!-- BIKING (curated rides — compact) -->
       <div id="biking" style="grid-column:span 4; min-height:300px; display:flex; flex-direction:column; border:1px solid #e7e4de; border-radius:18px; background:#fff; box-shadow:0 1px 2px rgba(0,0,0,0.02); padding:28px 28px 26px;">
         <div style="display:flex; align-items:center; justify-content:space-between;">
-          <div style="font-family:var(--display); font-size:28px; letter-spacing:-0.015em; color:#1f1d1a;">Biking</div>
-          <span style="font-family:var(--ui); font-size:11px; font-weight:600; letter-spacing:0.04em; color:#8b867e; background:#f1efe9; padding:4px 10px; border-radius:999px;">&#9201; latest ride</span>
+          <div style="font-family:var(--display); font-size:28px; letter-spacing:-0.015em; color:#1f1d1a;">{{ bikingTitle }}</div>
+          <span style="font-family:var(--ui); font-size:11px; font-weight:600; letter-spacing:0.04em; color:#8b867e; background:#f1efe9; padding:4px 10px; border-radius:999px;">selected rides</span>
         </div>
-        <div style="margin-top:16px; padding:16px 18px; border:1px solid #ece9e3; border-radius:12px; display:flex; align-items:center; justify-content:space-between;">
-          <div>
-            <div style="font-family:var(--display); font-size:30px; color:#1f1d1a; line-height:1;">{{ bkLatestKm }}<span style="font-size:15px; color:#a39e95;"> km</span></div>
-            <div style="font-family:var(--ui); font-size:12.5px; color:#8b867e; margin-top:5px;">{{ bkLatestLabel }}</div>
-          </div>
-          <div style="width:84px; height:56px; border-radius:8px; background:repeating-linear-gradient(135deg,#e9e6df 0 8px,#f1efe9 8px 16px);"></div>
-        </div>
-        <div style="display:flex; gap:26px; margin-top:auto; padding-top:18px;">
-          <div>
-            <div style="font-family:var(--display); font-size:26px; color:#1f1d1a;">{{ bkYtdKm }}<span style="font-size:14px; color:#a39e95;"> km</span></div>
-            <div style="font-family:var(--ui); font-size:12px; color:#8b867e; margin-top:2px;">this year</div>
-          </div>
-          <div>
-            <div style="font-family:var(--display); font-size:26px; color:#1f1d1a;">{{ bkRideDay }}</div>
-            <div style="font-family:var(--ui); font-size:12px; color:#8b867e; margin-top:2px;">ride day</div>
-          </div>
+        <div style="display:flex; flex-direction:column; gap:12px; margin-top:16px; overflow:auto;">
+          <sc-for list="{{ rides }}" as="r" hint-placeholder-count="3">
+            <a href="{{ r.link }}" target="_blank" rel="noopener" style="padding:16px 18px; border:1px solid #ece9e3; border-radius:12px; display:flex; align-items:center; justify-content:space-between; gap:14px; transition:border-color .2s ease;" style-hover="border-color:#d4cfc5;">
+              <div style="min-width:0;">
+                <div style="font-family:var(--display); font-size:20px; color:#1f1d1a; line-height:1.15;">{{ r.name }}</div>
+                <div style="font-family:var(--ui); font-size:12.5px; color:#8b867e; margin-top:5px;">{{ r.distance }}</div>
+              </div>
+              <div style="position:relative; flex:none; width:84px; height:56px; border-radius:8px; overflow:hidden; background:repeating-linear-gradient(135deg,#e9e6df 0 8px,#f1efe9 8px 16px);">{{ r.cover }}</div>
+            </a>
+          </sc-for>
         </div>
       </div>
 
-      <!-- RESTAURANTS (map) -->
+      <!-- RESTAURANTS (recommendations + static My Maps embed) -->
       <div id="restaurants" style="grid-column:span 8; min-height:300px; display:grid; grid-template-columns:minmax(220px,300px) 1fr; border:1px solid #e7e4de; border-radius:18px; background:#fff; box-shadow:0 1px 2px rgba(0,0,0,0.02); overflow:hidden;">
         <div style="padding:26px 26px; display:flex; flex-direction:column; min-width:0;">
           <div style="font-family:var(--display); font-size:26px; letter-spacing:-0.015em; color:#1f1d1a;">{{ restaurantsTitle }}</div>
@@ -115,7 +112,7 @@
           </div>
         </div>
         <div style="position:relative; min-height:300px; border-left:1px solid #ece9e3;">
-          <iframe title="Seattle restaurant map" src="https://www.google.com/maps?q=restaurants%20Capitol%20Hill%20Seattle&z=12&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" style="position:absolute; inset:0; width:100%; height:100%; border:0; filter:grayscale(0.18) contrast(0.96);"></iframe>
+          <span style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-family:ui-monospace,Menlo,monospace; font-size:11px; letter-spacing:0.1em; color:#b3aea4; text-transform:uppercase;">map</span>{{ mapEmbed }}
         </div>
       </div>
 

@@ -2,7 +2,7 @@
 title: On keeping a digital notebook
 tag: Blog
 date: "Apr 2026"
-order: 1
+pinned: false
 excerpt: A few notes on writing things down before they evaporate — and why the messy middle is the point.
 coda: Mostly I write these to find out what I actually think.
 ---

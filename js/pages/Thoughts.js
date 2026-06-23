@@ -13,6 +13,14 @@
     fontWeight: 500, padding: "8px 15px", borderRadius: "999px",
     transition: "background .2s ease, color .2s ease"
   };
+  // A bookmark icon (React element) for pinned thoughts, or null. Built in the
+  // module — never as <svg> in the template — and dropped into a {{ t.pin }} slot.
+  function pinIcon() {
+    return window.React.createElement("svg", {
+      width: 13, height: 13, viewBox: "0 0 24 24", fill: "#c8623f",
+      "aria-label": "Pinned", style: { flex: "none", transform: "translateY(1px)" }
+    }, window.React.createElement("path", { d: "M6 2h12a1 1 0 0 1 1 1v18l-7-4-7 4V3a1 1 0 0 1 1-1z" }));
+  }
 
   Site.register("thoughts", {
     modalKey: "reader",
@@ -44,6 +52,7 @@
         });
         return assign({}, t, {
           excerpt: Site.renderInline(t.excerpt),
+          pin: t.pinned ? pinIcon() : null,
           open: modal.open(payload)
         });
       });

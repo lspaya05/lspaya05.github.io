@@ -182,15 +182,15 @@
   }
 
   /* ---- collections (per-item markdown folders) ---------------------------- */
+  // Sort by a date-like key DESCENDING (newest first): `date` if present, else
+  // `year`. Items with neither (e.g. books, which use `when:`/`status:`) keep
+  // their manifest order. Then float `pinned: true` items to the front (stable).
   function sortItems(items) {
-    var hasOrder = items.some(function (i) { return i.order != null; });
-    if (hasOrder) {
-      items.sort(function (a, b) { return (a.order || 0) - (b.order || 0); });
-    } else if (items.some(function (i) { return i.date; })) {
-      items.sort(function (a, b) {
-        return String(b.date || "").localeCompare(String(a.date || ""));
-      });
+    function key(i) { return String(i.date || i.year || ""); }
+    if (items.some(function (i) { return i.date || i.year; })) {
+      items.sort(function (a, b) { return key(b).localeCompare(key(a)); });
     }
+    items.sort(function (a, b) { return (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0); });
     return items;
   }
   // Per-item collection. Each item is its own folder: content/<name>/<slug>/,

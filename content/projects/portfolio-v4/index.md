@@ -2,7 +2,6 @@
 title: Portfolio v4
 cat: This site
 year: "2026"
-order: 7
 kind: readme
 art: website
 action: You're here

@@ -1,6 +1,6 @@
 name: prefetch-data
 
-# Pull Strava + Google Photos into content/data/*.json on a schedule.
+# Pull Google Photos into content/data/*.json on a schedule.
 # Secrets stay server-side; only plain JSON ships to the static site.
 # Each step skips itself if its secrets are not configured, so this workflow
 # is safe to enable before you've set anything up.
@@ -24,13 +24,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-
-      - name: Strava -> biking.json
-        env:
-          STRAVA_CLIENT_ID: ${{ secrets.STRAVA_CLIENT_ID }}
-          STRAVA_CLIENT_SECRET: ${{ secrets.STRAVA_CLIENT_SECRET }}
-          STRAVA_REFRESH_TOKEN: ${{ secrets.STRAVA_REFRESH_TOKEN }}
-        run: node .github/scripts/strava.mjs
 
       - name: Google Photos -> pictures.json
         env:

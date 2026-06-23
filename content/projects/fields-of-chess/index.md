@@ -2,7 +2,6 @@
 title: Fields of Chess
 cat: Generative
 year: "2024"
-order: 4
 kind: readme
 art: poster
 action: View

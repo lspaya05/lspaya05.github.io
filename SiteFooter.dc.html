@@ -24,23 +24,19 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{ &quot;$preview&quot;: { &quot;width&quot;: 1180, &quot;height&quot;: 200 } }">
 class Component extends DCLogic {
-  state = { socials: [], tagline: '' };
+  state = { data: {} };
   componentDidMount(){
-    Site.config().then(cfg => {
-      const f = cfg.footer || {};
-      this.setState({ socials: f.socials || [], tagline: f.tagline || '' });
-    }).catch(e => console.error('[footer] config load failed', e));
-  }
-  _href(label){
-    const s = (this.state.socials || []).find(x => (x.label || '').toLowerCase() === label);
-    return s ? s.href : '#';
+    Site.page('footer').then(doc => {
+      this.setState({ data: doc.data || {} });
+    }).catch(e => console.error('[footer] content load failed', e));
   }
   renderVals(){
+    const d = this.state.data || {};
     return {
-      githubHref: this._href('github'),
-      linkedinHref: this._href('linkedin'),
-      emailHref: this._href('email'),
-      tagline: this.state.tagline
+      githubHref: d.github || '#',
+      linkedinHref: d.linkedin || '#',
+      emailHref: d.email || '#',
+      tagline: d.tagline || ''
     };
   }
 }

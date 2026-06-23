@@ -4,8 +4,8 @@
 # (The leading underscore keeps _template out of the manifest.)
 title: My Post Title
 tag: Blog               # any label; becomes a filter chip automatically
-date: "Jun 2026"        # display string
-order: 0                # lower = earlier (newest at top)
+date: "Jun 2026"        # display string; posts sort by date (newest first)
+pinned: false           # true floats this post to the top + shows a bookmark icon
 excerpt: One or two sentences for the card and the reader's lead paragraph. **Inline markdown** works.
 image: ./cover.jpg      # OPTIONAL — co-locate in this folder; used if you add card art
 # OPTIONAL:

@@ -17,10 +17,7 @@ pictures_fallback:
 restaurants_title: Eating around Seattle
 restaurants_sub: Places I send friends to
 
-# Shown until content/data/biking.json exists (Strava prefetch).
-biking_fallback:
-  latestKm: "42.6"
-  latestLabel: Lake WA loop · Jun 15
-  ytdKm: "1,240"
-  rideDay: Saturdays
+# Biking block — curated rides live in content/misc/rides/<slug>/ (each folder
+# has an index.md with name/distance/link + a route image). Copy text only here.
+biking_title: Biking
 ---

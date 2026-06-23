@@ -4,8 +4,7 @@
 # next to it. (The leading underscore keeps _template out of the manifest.)
 title: My Thing
 cat: Web app            # the small uppercase label on the card
-year: "2026"
-order: 0                # lower = earlier; controls card order
+year: "2026"            # projects sort by year (newest first)
 kind: readme            # readme = full layout with hero + buttons | essay = prose
 action: Visit           # label for the primary button
 stack: [TypeScript, React]   # tech chips (readme only)

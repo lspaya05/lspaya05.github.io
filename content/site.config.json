@@ -6,13 +6,5 @@
     { "key": "thoughts", "label": "Thoughts", "href": "thoughts/" },
     { "key": "reading",  "label": "Reading",  "href": "reading/" },
     { "key": "misc",     "label": "Misc",     "href": "misc/" }
-  ],
-  "footer": {
-    "tagline": "Draft layout · placeholder content — swap in your own copy, links & images.",
-    "socials": [
-      { "label": "GitHub",   "href": "https://github.com/lspaya05" },
-      { "label": "LinkedIn", "href": "#" },
-      { "label": "Email",    "href": "mailto:lspaya@uw.edu" }
-    ]
-  }
+  ]
 }

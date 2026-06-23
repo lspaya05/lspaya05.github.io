@@ -2,7 +2,6 @@
 title: Snob
 cat: Web app
 year: "2023"
-order: 6
 kind: readme
 art: web
 action: Visit

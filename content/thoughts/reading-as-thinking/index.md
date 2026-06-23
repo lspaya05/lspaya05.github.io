@@ -2,7 +2,7 @@
 title: Reading as a way of thinking
 tag: Essay
 date: "Nov 2025"
-order: 7
+pinned: false
 excerpt: Notes on marginalia, re-reading, and treating books as conversations.
 ---
 I used to read to finish. Now I read to *argue*. The margins of my books are full of objections, agreements, and small arrows connecting one page to another twenty pages back.

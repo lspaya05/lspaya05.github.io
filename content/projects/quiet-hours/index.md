@@ -2,7 +2,6 @@
 title: Quiet Hours
 cat: Essay
 year: "2022"
-order: 9
 kind: essay
 art: concept
 action: Read

@@ -2,7 +2,7 @@
 title: What I learned shipping nothing
 tag: Essay
 date: "Feb 2026"
-order: 4
+pinned: false
 excerpt: A year of unfinished side projects, and the surprisingly useful things they left behind.
 ---
 I finished almost nothing last year. A dozen repos, three half-apps, one abandoned hardware build. By the usual scoreboard, a wash.

@@ -2,7 +2,6 @@
 title: Tinybase
 cat: Open source
 year: "2025"
-order: 3
 kind: readme
 art: sync
 action: GitHub

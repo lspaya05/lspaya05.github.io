@@ -2,7 +2,6 @@
 title: Field Notes
 cat: Web app
 year: "2026"
-order: 1
 kind: readme
 art: note app
 action: Visit

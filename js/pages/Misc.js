@@ -1,6 +1,8 @@
-/* Misc page logic. Data: content/misc/restaurants.md (map pins),
- * content/misc/page.md (copy + fallbacks), and prefetched integrations
- * content/data/pictures.json (Google Photos) + biking.json (Strava). */
+/* Misc page logic. Data:
+ *   content/misc/restaurants/index.md  (map pin list) + restaurants/map.html (embed)
+ *   content/misc/rides/<slug>/         (curated biking rides — modular collection)
+ *   content/misc/page.md               (copy + fallbacks)
+ *   content/data/pictures.json         (Google Photos slideshow, prefetched) */
 (function () {
   "use strict";
   function assign(t) {
@@ -19,18 +21,23 @@
     var p = normPics((d.pictures && d.pictures.length) ? d.pictures : (copy.pictures_fallback || []));
     return p.length ? p : [{ caption: "" }];
   }
-
   Site.register("misc", {
     state: { slide: 0 },
 
     load: function () {
       return Promise.all([
-        Site.list("misc", "restaurants.md").catch(function () { return { items: [] }; }),
+        Site.list("misc/restaurants", "index.md").catch(function () { return { items: [] }; }),
         Site.page("misc"),
         Site.data("pictures.json"),
-        Site.data("biking.json")
+        Site.collection("misc/rides").catch(function () { return []; }),
+        fetch("content/misc/restaurants/map.html").then(function (r) {
+          return r.ok ? r.text() : "";
+        }).catch(function () { return ""; })
       ]).then(function (r) {
-        return { spots: r[0].items, copy: r[1].data || {}, pictures: r[2], biking: r[3] };
+        return {
+          spots: r[0].items, copy: r[1].data || {}, pictures: r[2],
+          rides: r[3], mapHtml: r[4]
+        };
       });
     },
 
@@ -52,7 +59,15 @@
         borderRadius: "50%", cursor: "pointer"
       };
       function go(n) { self.setState({ slide: ((n % len) + len) % len }); }
-      var bk = d.biking || copy.biking_fallback || {};
+
+      var rides = (d.rides || []).map(function (r) {
+        return {
+          name: r.title || r.name || "",
+          distance: r.distance || "",
+          link: r.link || "#",
+          cover: Site.cover(r.image, r.title || r.name || "")
+        };
+      });
 
       return {
         heroIntro: Site.renderInline(copy.hero || ""),
@@ -78,13 +93,12 @@
         picturesSub: copy.pictures_sub || "all shot on iPhone",
         restaurantsTitle: copy.restaurants_title || "Eating around Seattle",
         restaurantsSub: copy.restaurants_sub || "",
-        // biking (Strava-prefetched, with fallback)
-        bkLatestKm: bk.latestKm || "",
-        bkLatestLabel: bk.latestLabel || "",
-        bkYtdKm: bk.ytdKm || "",
-        bkRideDay: bk.rideDay || "",
-        // restaurant pins
-        spots: d.spots || []
+        // biking — curated rides collection
+        bikingTitle: copy.biking_title || "Biking",
+        rides: rides,
+        // restaurants: pin list + static My Maps embed (content/misc/restaurants/map.html)
+        spots: d.spots || [],
+        mapEmbed: d.mapHtml ? Site.renderMarkdown(d.mapHtml) : null
       };
     }
   });

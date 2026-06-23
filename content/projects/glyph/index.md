@@ -2,7 +2,6 @@
 title: Glyph
 cat: Type tool
 year: "2023"
-order: 8
 kind: readme
 art: type
 action: View
