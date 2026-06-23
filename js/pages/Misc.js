@@ -77,7 +77,7 @@
           return {
             onClick: (function (k) { return function () { go(k); }; })(idx),
             style: idx === i
-              ? assign({}, dotBase, { background: "#3a3731", transform: "scale(1.25)" })
+              ? assign({}, dotBase, { background: "var(--ink-soft)", transform: "scale(1.25)" })
               : assign({}, dotBase, { background: "rgba(255,255,255,0.85)", boxShadow: "0 0 0 1px rgba(0,0,0,0.08)" })
           };
         }),

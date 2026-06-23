@@ -12,7 +12,7 @@
   // module — never as <svg> in the template — and dropped into a {{ t.pin }} slot.
   function pinIcon() {
     return window.React.createElement("svg", {
-      width: 13, height: 13, viewBox: "0 0 24 24", fill: "#c8623f",
+      width: 13, height: 13, viewBox: "0 0 24 24", fill: "var(--accent)",
       "aria-label": "Pinned", style: { flex: "none", transform: "translateY(1px)" }
     }, window.React.createElement("path", { d: "M6 2h12a1 1 0 0 1 1 1v18l-7-4-7 4V3a1 1 0 0 1 1-1z" }));
   }
@@ -79,8 +79,8 @@
           label: label,
           onClick: (function (l) { return function () { self.setState({ filter: l }); }; })(label),
           style: label === filter
-            ? assign({}, CHIP, { background: "#1f1d1a", color: "#f7f6f3" })
-            : assign({}, CHIP, { background: "#fff", color: "#74706a", border: "1px solid #e7e4de" })
+            ? assign({}, CHIP, { background: "var(--ink)", color: "var(--paper)" })
+            : assign({}, CHIP, { background: "var(--surface)", color: "var(--text-muted)", border: "1px solid var(--border)" })
         };
       });
 

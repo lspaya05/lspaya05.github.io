@@ -20,9 +20,9 @@
 <style>
   @media (max-width:900px){ #thoughtsCols{columns:2 !important;} }
   @media (max-width:600px){ #thoughtsCols{columns:1 !important;} }
-  .tbody p{font-family:var(--ui); font-size:17px; line-height:1.8; color:#3a3731; margin:0 0 24px;}
-  .tbody h3{font-family:var(--display); font-size:26px; letter-spacing:-0.01em; color:#1f1d1a; margin:38px 0 12px;}
-  .tbody blockquote{margin:30px 0; padding:4px 0 4px 22px; border-left:2px solid #d8d3ca; font-family:var(--display); font-size:21px; line-height:1.5; color:#5d5952; font-style:italic;}
+  .tbody p{font-family:var(--ui); font-size:17px; line-height:1.8; color:var(--ink-soft); margin:0 0 24px;}
+  .tbody h3{font-family:var(--display); font-size:26px; letter-spacing:-0.01em; color:var(--ink); margin:38px 0 12px;}
+  .tbody blockquote{margin:30px 0; padding:4px 0 4px 22px; border-left:2px solid var(--rule-quote); font-family:var(--display); font-size:21px; line-height:1.5; color:var(--text-2); font-style:italic;}
 </style>
 </helmet>
 
@@ -32,8 +32,8 @@
 
   <!-- HEADER -->
   <section style="max-width:var(--mw); margin:0 auto; padding:64px 32px 30px;">
-    <h1 style="font-family:var(--display); font-size:clamp(38px,5vw,60px); margin:0; letter-spacing:-0.02em; color:#1f1d1a;">Thoughts</h1>
-    <p style="font-family:var(--display); font-size:clamp(20px,2.2vw,26px); line-height:1.4; color:#b3ada3; max-width:620px; margin:18px 0 0; text-wrap:pretty;">{{ heroIntro }}</p>
+    <h1 style="font-family:var(--display); font-size:clamp(38px,5vw,60px); margin:0; letter-spacing:-0.02em; color:var(--ink);">Thoughts</h1>
+    <p style="font-family:var(--display); font-size:clamp(20px,2.2vw,26px); line-height:1.4; color:var(--text-ghost); max-width:620px; margin:18px 0 0; text-wrap:pretty;">{{ heroIntro }}</p>
   </section>
 
   <!-- CONTROLS -->
@@ -43,7 +43,7 @@
         <button onClick="{{ tg.onClick }}" style="{{ tg.style }}">{{ tg.label }}</button>
       </sc-for>
     </div>
-    <div onMouseLeave="{{ segLeave }}" style="position:relative; display:flex; background:#ece9e3; border-radius:999px; padding:3px;">
+    <div onMouseLeave="{{ segLeave }}" style="position:relative; display:flex; background:var(--border-subtle); border-radius:999px; padding:3px;">
       <div style="{{ vIndicator }}"></div>
       <button onClick="{{ onBlocks }}" onMouseEnter="{{ segHover0 }}" style="{{ vBlocksBtn }}">Blocks</button>
       <button onClick="{{ onList }}" onMouseEnter="{{ segHover1 }}" style="{{ vListBtn }}">List</button>
@@ -53,17 +53,17 @@
   <!-- LIST VIEW -->
   <sc-if value="{{ isList }}" hint-placeholder-val="{{ true }}">
     <section style="max-width:var(--mw); margin:0 auto; padding:26px 32px 24px;">
-      <div style="border-top:1px solid #ece9e3;">
+      <div style="border-top:1px solid var(--border-subtle);">
         <sc-for list="{{ items }}" as="t" hint-placeholder-count="6">
-          <a href="#" onClick="{{ t.open }}" style="display:flex; align-items:baseline; justify-content:space-between; gap:24px; padding:22px 6px; border-bottom:1px solid #ece9e3; transition:background .2s ease; cursor:pointer;" style-hover="background:#fbfaf7;">
+          <a href="#" onClick="{{ t.open }}" style="display:flex; align-items:baseline; justify-content:space-between; gap:24px; padding:22px 6px; border-bottom:1px solid var(--border-subtle); transition:background .2s ease; cursor:pointer;" style-hover="background:var(--hover);">
             <div style="min-width:0;">
               <div style="display:flex; align-items:baseline; gap:13px; flex-wrap:wrap;">
-                {{ t.pin }}<span style="font-family:var(--display); font-size:24px; letter-spacing:-0.01em; color:#1f1d1a;">{{ t.title }}</span>
-                <span style="font-family:var(--ui); font-size:10.5px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:#8b867e; background:#f1efe9; padding:3px 9px; border-radius:999px;">{{ t.tag }}</span>
+                {{ t.pin }}<span style="font-family:var(--display); font-size:24px; letter-spacing:-0.01em; color:var(--ink);">{{ t.title }}</span>
+                <span style="font-family:var(--ui); font-size:10.5px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--text-soft); background:var(--surface-muted); padding:3px 9px; border-radius:999px;">{{ t.tag }}</span>
               </div>
-              <div style="font-family:var(--ui); font-size:14.5px; line-height:1.55; color:#74706a; margin-top:8px; max-width:680px;">{{ t.excerpt }}</div>
+              <div style="font-family:var(--ui); font-size:14.5px; line-height:1.55; color:var(--text-muted); margin-top:8px; max-width:680px;">{{ t.excerpt }}</div>
             </div>
-            <span style="font-family:var(--ui); font-size:13.5px; color:#a39e95; flex:none;">{{ t.date }}</span>
+            <span style="font-family:var(--ui); font-size:13.5px; color:var(--text-faint); flex:none;">{{ t.date }}</span>
           </a>
         </sc-for>
       </div>
@@ -75,13 +75,13 @@
     <section style="max-width:var(--mw); margin:0 auto; padding:26px 32px 24px;">
       <div id="thoughtsCols" style="columns:3; column-gap:18px;">
         <sc-for list="{{ items }}" as="t" hint-placeholder-count="6">
-          <a href="#" onClick="{{ t.open }}" style="display:block; width:100%; break-inside:avoid; margin-bottom:18px; background:#fff; border:1px solid #e7e4de; border-radius:var(--card-radius); padding:20px 22px; box-shadow:0 1px 2px rgba(0,0,0,0.02); cursor:pointer;" style-hover="border-color:#d4cfc5; box-shadow:0 6px 18px rgba(0,0,0,0.05);">
+          <a href="#" onClick="{{ t.open }}" style="display:block; width:100%; break-inside:avoid; margin-bottom:18px; background:var(--surface); border:1px solid var(--border); border-radius:var(--card-radius); padding:20px 22px; box-shadow:0 1px 2px rgba(0,0,0,0.02); cursor:pointer;" style-hover="border-color:var(--border-strong); box-shadow:0 6px 18px rgba(0,0,0,0.05);">
             <div style="display:flex; justify-content:space-between; align-items:center;">
-              <span style="display:flex; align-items:center; gap:6px;">{{ t.pin }}<span style="font-family:var(--ui); font-size:10.5px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:#8b867e; background:#f1efe9; padding:3px 9px; border-radius:999px;">{{ t.tag }}</span></span>
-              <span style="font-family:var(--ui); font-size:12.5px; color:#a39e95;">{{ t.date }}</span>
+              <span style="display:flex; align-items:center; gap:6px;">{{ t.pin }}<span style="font-family:var(--ui); font-size:10.5px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--text-soft); background:var(--surface-muted); padding:3px 9px; border-radius:999px;">{{ t.tag }}</span></span>
+              <span style="font-family:var(--ui); font-size:12.5px; color:var(--text-faint);">{{ t.date }}</span>
             </div>
-            <div style="font-family:var(--display); font-size:24px; line-height:1.2; letter-spacing:-0.01em; margin:14px 0 9px; color:#1f1d1a;">{{ t.title }}</div>
-            <div style="font-family:var(--ui); font-size:14px; line-height:1.55; color:#74706a;">{{ t.excerpt }}</div>
+            <div style="font-family:var(--display); font-size:24px; line-height:1.2; letter-spacing:-0.01em; margin:14px 0 9px; color:var(--ink);">{{ t.title }}</div>
+            <div style="font-family:var(--ui); font-size:14px; line-height:1.55; color:var(--text-muted);">{{ t.excerpt }}</div>
           </a>
         </sc-for>
       </div>
@@ -93,44 +93,44 @@
   <!-- ===== THOUGHT READER (text-only) ===== -->
   <sc-if value="{{ readerOpen }}" hint-placeholder-val="{{ false }}">
     <div onClick="{{ closeReader }}" style="position:fixed; inset:0; z-index:100; background:rgba(31,29,26,0.34); backdrop-filter:blur(3px); -webkit-backdrop-filter:blur(3px); display:flex; align-items:flex-start; justify-content:center; padding:40px 22px; overflow:auto; animation:popfade .25s ease;">
-      <div onClick="{{ stop }}" style="position:relative; width:min(860px,94vw); margin:auto; background:#f7f6f3; border:1px solid #e7e4de; border-radius:18px; box-shadow:0 30px 80px rgba(0,0,0,0.28); animation:poprise .3s cubic-bezier(.2,.7,.3,1);">
-        <button onClick="{{ closeReader }}" aria-label="Close" style="position:absolute; top:18px; right:18px; z-index:6; width:38px; height:38px; border-radius:50%; border:1px solid #e7e4de; background:rgba(247,246,243,0.92); backdrop-filter:blur(4px); color:#3a3731; font-size:20px; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center;">&times;</button>
+      <div onClick="{{ stop }}" style="position:relative; width:min(860px,94vw); margin:auto; background:var(--paper); border:1px solid var(--border); border-radius:18px; box-shadow:0 30px 80px rgba(0,0,0,0.28); animation:poprise .3s cubic-bezier(.2,.7,.3,1);">
+        <button onClick="{{ closeReader }}" aria-label="Close" style="position:absolute; top:18px; right:18px; z-index:6; width:38px; height:38px; border-radius:50%; border:1px solid var(--border); background:rgba(247,246,243,0.92); backdrop-filter:blur(4px); color:var(--ink-soft); font-size:20px; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center;">&times;</button>
 
         <div style="padding:54px clamp(26px,6vw,60px) 52px;">
           <!-- masthead -->
           <div style="text-align:center;">
-            <div style="font-family:var(--display); font-size:20px; font-weight:500; letter-spacing:-0.01em; color:#1f1d1a;">Leonard</div>
+            <div style="font-family:var(--display); font-size:20px; font-weight:500; letter-spacing:-0.01em; color:var(--ink);">Leonard</div>
           </div>
 
           <!-- eyebrow + title -->
-          <div style="text-align:center; font-family:var(--ui); font-size:11.5px; letter-spacing:0.1em; text-transform:uppercase; color:#a39e95; margin:38px 0 12px;">{{ reader.tag }}</div>
-          <h2 style="font-family:var(--display); font-size:clamp(32px,4.8vw,50px); text-align:center; letter-spacing:-0.02em; color:#1f1d1a; margin:0; line-height:1.07;">{{ reader.title }}</h2>
-          <div style="text-align:center; font-family:var(--ui); font-size:13.5px; color:#a39e95; margin:16px 0 0;">
-            Posted on <span style="color:#74706a;">{{ reader.date }}</span> by <span style="color:#74706a;">Leonard</span>
-            <span style="margin:0 8px; color:#d8d3ca;">&middot;</span>{{ reader.readTime }}
+          <div style="text-align:center; font-family:var(--ui); font-size:11.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-faint); margin:38px 0 12px;">{{ reader.tag }}</div>
+          <h2 style="font-family:var(--display); font-size:clamp(32px,4.8vw,50px); text-align:center; letter-spacing:-0.02em; color:var(--ink); margin:0; line-height:1.07;">{{ reader.title }}</h2>
+          <div style="text-align:center; font-family:var(--ui); font-size:13.5px; color:var(--text-faint); margin:16px 0 0;">
+            Posted on <span style="color:var(--text-muted);">{{ reader.date }}</span> by <span style="color:var(--text-muted);">Leonard</span>
+            <span style="margin:0 8px; color:var(--rule-quote);">&middot;</span>{{ reader.readTime }}
           </div>
 
           <!-- body (no images) -->
           <div class="tbody" style="margin-top:40px;">
-            <p style="font-family:var(--display) !important; font-size:22px !important; line-height:1.5 !important; color:#1f1d1a !important;">{{ reader.excerpt }}</p>
+            <p style="font-family:var(--display) !important; font-size:22px !important; line-height:1.5 !important; color:var(--ink) !important;">{{ reader.excerpt }}</p>
             {{ reader.body }}
           </div>
 
           <!-- prev / next (navigate within the live, sorted list) -->
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:42px; padding-top:24px; border-top:1px solid #ece9e3;">
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:42px; padding-top:24px; border-top:1px solid var(--border-subtle);">
             <div style="font-family:var(--ui);">
               <sc-if value="{{ reader.hasPrev }}" hint-placeholder-val="{{ true }}">
                 <a href="#" onClick="{{ reader.openPrev }}" style="display:block; text-decoration:none; cursor:pointer;" style-hover="opacity:0.7;">
-                  <div style="font-size:11px; letter-spacing:0.07em; text-transform:uppercase; color:#a39e95;">&larr; Previous</div>
-                  <div style="font-family:var(--display); font-size:18px; letter-spacing:-0.005em; color:#1f1d1a; margin-top:5px; line-height:1.25;">{{ reader.prevTitle }}</div>
+                  <div style="font-size:11px; letter-spacing:0.07em; text-transform:uppercase; color:var(--text-faint);">&larr; Previous</div>
+                  <div style="font-family:var(--display); font-size:18px; letter-spacing:-0.005em; color:var(--ink); margin-top:5px; line-height:1.25;">{{ reader.prevTitle }}</div>
                 </a>
               </sc-if>
             </div>
             <div style="font-family:var(--ui); text-align:right;">
               <sc-if value="{{ reader.hasNext }}" hint-placeholder-val="{{ true }}">
                 <a href="#" onClick="{{ reader.openNext }}" style="display:block; text-decoration:none; cursor:pointer;" style-hover="opacity:0.7;">
-                  <div style="font-size:11px; letter-spacing:0.07em; text-transform:uppercase; color:#a39e95;">Next &rarr;</div>
-                  <div style="font-family:var(--display); font-size:18px; letter-spacing:-0.005em; color:#1f1d1a; margin-top:5px; line-height:1.25;">{{ reader.nextTitle }}</div>
+                  <div style="font-size:11px; letter-spacing:0.07em; text-transform:uppercase; color:var(--text-faint);">Next &rarr;</div>
+                  <div style="font-family:var(--display); font-size:18px; letter-spacing:-0.005em; color:var(--ink); margin-top:5px; line-height:1.25;">{{ reader.nextTitle }}</div>
                 </a>
               </sc-if>
             </div>

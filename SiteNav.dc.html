@@ -9,11 +9,11 @@
 <x-dc>
 <header id="siteHeader" style="position:fixed; top:0; left:0; right:0; z-index:50; backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); background:rgba(247,246,243,0.72); border-bottom:1px solid rgba(0,0,0,0.045); transition:background .35s ease, border-color .35s ease, backdrop-filter .35s ease;">
   <div style="max-width:var(--mw,1180px); margin:0 auto; padding:13px 32px; display:flex; align-items:center; justify-content:space-between; gap:24px;">
-    <a id="siteBrand" href="{{ brandHref }}" style="font-family:var(--display); font-size:22px; font-weight:500; letter-spacing:-0.01em; color:#1f1d1a; transition:opacity .35s ease, transform .35s ease;">{{ brand }}</a>
-    <nav id="siteNav" style="position:relative; display:flex; align-items:center; gap:2px; background:#ffffff; border:1px solid #e7e4de; border-radius:999px; padding:5px 6px; box-shadow:0 1px 2px rgba(0,0,0,0.03);">
-      <div id="navHighlight" style="position:absolute; top:5px; bottom:5px; left:0; width:0; border-radius:999px; background:#f1efe9; opacity:0; transition:left .28s cubic-bezier(.4,0,.2,1), width .28s cubic-bezier(.4,0,.2,1), opacity .2s ease; pointer-events:none; z-index:0;"></div>
+    <a id="siteBrand" href="{{ brandHref }}" style="font-family:var(--display); font-size:22px; font-weight:500; letter-spacing:-0.01em; color:var(--ink); transition:opacity .35s ease, transform .35s ease;">{{ brand }}</a>
+    <nav id="siteNav" style="position:relative; display:flex; align-items:center; gap:2px; background:var(--surface); border:1px solid var(--border); border-radius:999px; padding:5px 6px; box-shadow:0 1px 2px rgba(0,0,0,0.03);">
+      <div id="navHighlight" style="position:absolute; top:5px; bottom:5px; left:0; width:0; border-radius:999px; background:var(--surface-muted); opacity:0; transition:left .28s cubic-bezier(.4,0,.2,1), width .28s cubic-bezier(.4,0,.2,1), opacity .2s ease; pointer-events:none; z-index:0;"></div>
       <sc-for list="{{ links }}" as="l" hint-placeholder-count="5">
-        <a data-key="{{ l.key }}" href="{{ l.href }}" style="position:relative; z-index:1; font-family:var(--ui); font-size:14px; padding:7px 15px; border-radius:999px; color:#74706a; font-weight:500; transition:color .2s ease;">{{ l.label }}</a>
+        <a data-key="{{ l.key }}" href="{{ l.href }}" style="position:relative; z-index:1; font-family:var(--ui); font-size:14px; padding:7px 15px; border-radius:999px; color:var(--text-muted); font-weight:500; transition:color .2s ease;">{{ l.label }}</a>
       </sc-for>
     </nav>
   </div>
@@ -37,14 +37,10 @@ class Component extends DCLogic {
     }).catch(e => console.error('[nav] config load failed', e));
     this._onScroll = (e) => this._scroll(e);
     window.addEventListener('scroll', this._onScroll, { passive: true });
-    window.addEventListener('scroll', this._onScroll, true);
-    document.addEventListener('scroll', this._onScroll, true);
     this._scroll();
   }
   componentWillUnmount(){
     window.removeEventListener('scroll', this._onScroll, { passive: true });
-    window.removeEventListener('scroll', this._onScroll, true);
-    document.removeEventListener('scroll', this._onScroll, true);
   }
   componentDidUpdate(){
     if(!this.state.wired && this._links().length){ this._wire(); this.state.wired = true; }
@@ -56,7 +52,7 @@ class Component extends DCLogic {
     const a = this.active();
     this._links().forEach(el => {
       const on = el.dataset.key === a;
-      el.style.color = on ? '#1f1d1a' : '#74706a';
+      el.style.color = on ? 'var(--ink)' : 'var(--text-muted)';
       el.style.fontWeight = on ? '700' : '500';
     });
   }
@@ -67,7 +63,7 @@ class Component extends DCLogic {
     if(!nav || !hl) return;
     const links = this._links();
     links.forEach(el => {
-      el.addEventListener('mouseenter', () => { this._moveTo(el, hl); hl.style.opacity = '1'; el.style.color = '#1f1d1a'; });
+      el.addEventListener('mouseenter', () => { this._moveTo(el, hl); hl.style.opacity = '1'; el.style.color = 'var(--ink)'; });
     });
     nav.addEventListener('mouseleave', () => { hl.style.opacity = '0'; this._paintActive(); });
     // seat the highlight under the active link (hidden) so the first hover slides naturally

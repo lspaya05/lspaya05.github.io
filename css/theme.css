@@ -22,12 +22,14 @@
 
   /* ---- ink / text ramp (dark -> faint) ---- */
   --ink: #1f1d1a;            /* primary text / headings */
+  --ink-soft: #3a3731;       /* softer dark ink — close buttons, reader prose, dots */
   --text: #46423c;          /* body copy */
   --text-2: #5d5952;         /* secondary body */
   --text-muted: #74706a;     /* muted */
   --text-soft: #8b867e;      /* softer labels */
   --text-faint: #a39e95;     /* faint labels / meta */
   --text-ghost: #b3ada3;     /* ghost / hero subhead */
+  --text-placeholder: #b3aea4; /* mono label on gradient placeholders */
 
   /* ---- borders / hairlines ---- */
   --border: #e7e4de;         /* default border */
@@ -40,5 +42,4 @@
   /* ---- accents + status ---- */
   --accent: #c8623f;         /* pins / bookmark icon / highlights */
   --accent-green: #5b8c6e;   /* "working on now" dot */
-  --danger: #b00020;         /* error (reserved) */
 }

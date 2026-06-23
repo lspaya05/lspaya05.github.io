@@ -31,8 +31,8 @@
 
   <!-- HEADER -->
   <section style="max-width:var(--mw); margin:0 auto; padding:64px 32px 14px;">
-    <h1 style="font-family:var(--display); font-size:clamp(38px,5vw,60px); margin:0; letter-spacing:-0.02em; color:#1f1d1a;">Misc</h1>
-    <p style="font-family:var(--display); font-size:clamp(20px,2.2vw,26px); line-height:1.4; color:#b3ada3; max-width:640px; margin:18px 0 6px; text-wrap:pretty;">{{ heroIntro }}</p>
+    <h1 style="font-family:var(--display); font-size:clamp(38px,5vw,60px); margin:0; letter-spacing:-0.02em; color:var(--ink);">Misc</h1>
+    <p style="font-family:var(--display); font-size:clamp(20px,2.2vw,26px); line-height:1.4; color:var(--text-ghost); max-width:640px; margin:18px 0 6px; text-wrap:pretty;">{{ heroIntro }}</p>
   </section>
 
   <!-- BENTO -->
@@ -40,26 +40,26 @@
     <div id="miscBento" style="display:grid; grid-template-columns:repeat(12,1fr); gap:16px;">
 
       <!-- PEOPLE (large, small names) -->
-      <div id="people" style="grid-column:span 7; min-height:384px; display:flex; flex-direction:column; border:1px solid #e7e4de; border-radius:18px; background:#fff; box-shadow:0 1px 2px rgba(0,0,0,0.02); padding:32px 34px;">
-        <div style="font-family:var(--display); font-size:32px; letter-spacing:-0.015em; color:#1f1d1a;">{{ peopleTitle }}</div>
-        <div style="font-family:var(--ui); font-size:13px; color:#a39e95; margin:6px 0 22px;">{{ peopleSub }}</div>
-        <p style="font-family:var(--ui); font-size:15px; line-height:1.95; color:#46423c; margin:0; max-width:560px;">{{ peopleProse }}</p>
+      <div id="people" style="grid-column:span 7; min-height:384px; display:flex; flex-direction:column; border:1px solid var(--border); border-radius:18px; background:var(--surface); box-shadow:0 1px 2px rgba(0,0,0,0.02); padding:32px 34px;">
+        <div style="font-family:var(--display); font-size:32px; letter-spacing:-0.015em; color:var(--ink);">{{ peopleTitle }}</div>
+        <div style="font-family:var(--ui); font-size:13px; color:var(--text-faint); margin:6px 0 22px;">{{ peopleSub }}</div>
+        <p style="font-family:var(--ui); font-size:15px; line-height:1.95; color:var(--text); margin:0; max-width:560px;">{{ peopleProse }}</p>
       </div>
 
       <!-- PICTURES (slideshow) -->
-      <div id="pictures" style="grid-column:span 5; min-height:384px; display:flex; flex-direction:column; border:1px solid #e7e4de; border-radius:18px; background:#fff; box-shadow:0 1px 2px rgba(0,0,0,0.02); overflow:hidden;">
+      <div id="pictures" style="grid-column:span 5; min-height:384px; display:flex; flex-direction:column; border:1px solid var(--border); border-radius:18px; background:var(--surface); box-shadow:0 1px 2px rgba(0,0,0,0.02); overflow:hidden;">
         <div style="padding:24px 26px 16px; display:flex; align-items:flex-end; justify-content:space-between;">
           <div>
-            <div style="font-family:var(--display); font-size:28px; letter-spacing:-0.015em; color:#1f1d1a;">Pictures</div>
-            <div style="font-family:var(--ui); font-size:13px; color:#8b867e; margin-top:2px;">{{ picturesSub }}</div>
+            <div style="font-family:var(--display); font-size:28px; letter-spacing:-0.015em; color:var(--ink);">Pictures</div>
+            <div style="font-family:var(--ui); font-size:13px; color:var(--text-soft); margin-top:2px;">{{ picturesSub }}</div>
           </div>
-          <div style="font-family:var(--ui); font-size:12.5px; color:#a39e95;">{{ slideCounter }}</div>
+          <div style="font-family:var(--ui); font-size:12.5px; color:var(--text-faint);">{{ slideCounter }}</div>
         </div>
         <div style="position:relative; flex:1; margin:0 26px 22px; border-radius:12px; overflow:hidden; background:repeating-linear-gradient(135deg,#e7e3db 0 12px,#efeae3 12px 24px);">
-          <span style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-family:ui-monospace,Menlo,monospace; font-size:11px; letter-spacing:0.1em; color:#b3aea4; text-transform:uppercase;">photo</span>{{ slideCover }}
+          <span style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-family:ui-monospace,Menlo,monospace; font-size:11px; letter-spacing:0.1em; color:var(--text-placeholder); text-transform:uppercase;">photo</span>{{ slideCover }}
           <div key="{{ slideKey }}" style="position:absolute; left:14px; bottom:48px; animation:mfade 0.5s ease; font-family:var(--display); font-size:21px; color:#2a2722; background:rgba(247,246,243,0.86); padding:5px 12px; border-radius:9px;">{{ slideCap }}</div>
-          <button onClick="{{ prev }}" aria-label="Previous" style="position:absolute; left:12px; top:50%; transform:translateY(-50%); width:34px; height:34px; border-radius:50%; border:none; background:rgba(255,255,255,0.9); color:#3a3731; font-size:16px; cursor:pointer; box-shadow:0 1px 4px rgba(0,0,0,0.12);">&#8249;</button>
-          <button onClick="{{ next }}" aria-label="Next" style="position:absolute; right:12px; top:50%; transform:translateY(-50%); width:34px; height:34px; border-radius:50%; border:none; background:rgba(255,255,255,0.9); color:#3a3731; font-size:16px; cursor:pointer; box-shadow:0 1px 4px rgba(0,0,0,0.12);">&#8250;</button>
+          <button onClick="{{ prev }}" aria-label="Previous" style="position:absolute; left:12px; top:50%; transform:translateY(-50%); width:34px; height:34px; border-radius:50%; border:none; background:rgba(255,255,255,0.9); color:var(--ink-soft); font-size:16px; cursor:pointer; box-shadow:0 1px 4px rgba(0,0,0,0.12);">&#8249;</button>
+          <button onClick="{{ next }}" aria-label="Next" style="position:absolute; right:12px; top:50%; transform:translateY(-50%); width:34px; height:34px; border-radius:50%; border:none; background:rgba(255,255,255,0.9); color:var(--ink-soft); font-size:16px; cursor:pointer; box-shadow:0 1px 4px rgba(0,0,0,0.12);">&#8250;</button>
           <div style="position:absolute; left:0; right:0; bottom:14px; display:flex; gap:7px; justify-content:center;">
             <sc-for list="{{ dots }}" as="d" hint-placeholder-count="5">
               <button onClick="{{ d.onClick }}" aria-label="Go to slide" style="{{ d.style }}"></button>
@@ -69,43 +69,43 @@
       </div>
 
       <!-- BIKING (curated rides — compact) -->
-      <div id="biking" style="grid-column:span 4; min-height:300px; display:flex; flex-direction:column; border:1px solid #e7e4de; border-radius:18px; background:#fff; box-shadow:0 1px 2px rgba(0,0,0,0.02); padding:28px 28px 26px;">
+      <div id="biking" style="grid-column:span 4; min-height:300px; display:flex; flex-direction:column; border:1px solid var(--border); border-radius:18px; background:var(--surface); box-shadow:0 1px 2px rgba(0,0,0,0.02); padding:28px 28px 26px;">
         <div style="display:flex; align-items:center; justify-content:space-between;">
-          <div style="font-family:var(--display); font-size:28px; letter-spacing:-0.015em; color:#1f1d1a;">{{ bikingTitle }}</div>
-          <span style="font-family:var(--ui); font-size:11px; font-weight:600; letter-spacing:0.04em; color:#8b867e; background:#f1efe9; padding:4px 10px; border-radius:999px;">selected rides</span>
+          <div style="font-family:var(--display); font-size:28px; letter-spacing:-0.015em; color:var(--ink);">{{ bikingTitle }}</div>
+          <span style="font-family:var(--ui); font-size:11px; font-weight:600; letter-spacing:0.04em; color:var(--text-soft); background:var(--surface-muted); padding:4px 10px; border-radius:999px;">selected rides</span>
         </div>
         <div style="display:flex; flex-direction:column; gap:12px; margin-top:16px; overflow:auto;">
           <sc-for list="{{ rides }}" as="r" hint-placeholder-count="3">
-            <a href="{{ r.link }}" target="_blank" rel="noopener" style="padding:16px 18px; border:1px solid #ece9e3; border-radius:12px; display:flex; align-items:center; justify-content:space-between; gap:14px; transition:border-color .2s ease;" style-hover="border-color:#d4cfc5;">
+            <a href="{{ r.link }}" target="_blank" rel="noopener" style="padding:16px 18px; border:1px solid var(--border-subtle); border-radius:12px; display:flex; align-items:center; justify-content:space-between; gap:14px; transition:border-color .2s ease;" style-hover="border-color:var(--border-strong);">
               <div style="min-width:0;">
-                <div style="font-family:var(--display); font-size:20px; color:#1f1d1a; line-height:1.15;">{{ r.name }}</div>
-                <div style="font-family:var(--ui); font-size:12.5px; color:#8b867e; margin-top:5px;">{{ r.distance }}</div>
+                <div style="font-family:var(--display); font-size:20px; color:var(--ink); line-height:1.15;">{{ r.name }}</div>
+                <div style="font-family:var(--ui); font-size:12.5px; color:var(--text-soft); margin-top:5px;">{{ r.distance }}</div>
               </div>
-              <div style="position:relative; flex:none; width:84px; height:56px; border-radius:8px; overflow:hidden; background:repeating-linear-gradient(135deg,#e9e6df 0 8px,#f1efe9 8px 16px);">{{ r.cover }}</div>
+              <div style="position:relative; flex:none; width:84px; height:56px; border-radius:8px; overflow:hidden; background:repeating-linear-gradient(135deg,#e9e6df 0 8px,var(--surface-muted) 8px 16px);">{{ r.cover }}</div>
             </a>
           </sc-for>
         </div>
       </div>
 
       <!-- RESTAURANTS (recommendations + static My Maps embed) -->
-      <div id="restaurants" style="grid-column:span 8; min-height:300px; display:grid; grid-template-columns:minmax(220px,300px) 1fr; border:1px solid #e7e4de; border-radius:18px; background:#fff; box-shadow:0 1px 2px rgba(0,0,0,0.02); overflow:hidden;">
+      <div id="restaurants" style="grid-column:span 8; min-height:300px; display:grid; grid-template-columns:minmax(220px,300px) 1fr; border:1px solid var(--border); border-radius:18px; background:var(--surface); box-shadow:0 1px 2px rgba(0,0,0,0.02); overflow:hidden;">
         <div style="padding:26px 26px; display:flex; flex-direction:column; min-width:0;">
-          <div style="font-family:var(--display); font-size:26px; letter-spacing:-0.015em; color:#1f1d1a;">{{ restaurantsTitle }}</div>
-          <div style="font-family:var(--ui); font-size:13px; color:#a39e95; margin:4px 0 16px;">{{ restaurantsSub }}</div>
+          <div style="font-family:var(--display); font-size:26px; letter-spacing:-0.015em; color:var(--ink);">{{ restaurantsTitle }}</div>
+          <div style="font-family:var(--ui); font-size:13px; color:var(--text-faint); margin:4px 0 16px;">{{ restaurantsSub }}</div>
           <div style="display:flex; flex-direction:column; gap:11px; overflow:auto;">
             <sc-for list="{{ spots }}" as="s" hint-placeholder-count="6">
               <div style="display:flex; align-items:baseline; gap:9px;">
-                <span style="flex:none; width:7px; height:7px; border-radius:50%; background:#c8623f; transform:translateY(-2px);"></span>
+                <span style="flex:none; width:7px; height:7px; border-radius:50%; background:var(--accent); transform:translateY(-2px);"></span>
                 <div style="min-width:0;">
-                  <div style="font-family:var(--ui); font-weight:600; font-size:14.5px; color:#1f1d1a; line-height:1.2;">{{ s.name }}</div>
-                  <div style="font-family:var(--ui); font-size:12.5px; color:#8b867e;">{{ s.meta }}</div>
+                  <div style="font-family:var(--ui); font-weight:600; font-size:14.5px; color:var(--ink); line-height:1.2;">{{ s.name }}</div>
+                  <div style="font-family:var(--ui); font-size:12.5px; color:var(--text-soft);">{{ s.meta }}</div>
                 </div>
               </div>
             </sc-for>
           </div>
         </div>
-        <div style="position:relative; min-height:300px; border-left:1px solid #ece9e3;">
-          <span style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-family:ui-monospace,Menlo,monospace; font-size:11px; letter-spacing:0.1em; color:#b3aea4; text-transform:uppercase;">map</span>{{ mapEmbed }}
+        <div style="position:relative; min-height:300px; border-left:1px solid var(--border-subtle);">
+          <span style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-family:ui-monospace,Menlo,monospace; font-size:11px; letter-spacing:0.1em; color:var(--text-placeholder); text-transform:uppercase;">map</span>{{ mapEmbed }}
         </div>
       </div>
 

@@ -306,7 +306,7 @@
     var idxShown = self.state.hoverSeg != null ? self.state.hoverSeg : activeIdx;
     var indicator = {
       position: "absolute", top: "3px", bottom: "3px", width: "calc(50% - 3px)",
-      left: idxShown === 0 ? "3px" : "50%", borderRadius: "999px", background: "#fff",
+      left: idxShown === 0 ? "3px" : "50%", borderRadius: "999px", background: "var(--surface)",
       boxShadow: "0 1px 2px rgba(0,0,0,0.06)",
       transition: "left .26s cubic-bezier(.4,0,.2,1)"
     };
@@ -315,7 +315,7 @@
         position: "relative", zIndex: 1, flex: 1, textAlign: "center", minWidth: "66px",
         border: "none", cursor: "pointer", background: "transparent",
         fontFamily: "var(--ui)", fontSize: "12.5px", padding: "6px 14px",
-        color: on ? "#1f1d1a" : "#8b867e", fontWeight: on ? 600 : 500,
+        color: on ? "var(--ink)" : "var(--text-soft)", fontWeight: on ? 600 : 500,
         transition: "color .2s ease"
       };
     };
@@ -419,7 +419,7 @@
     // utilities
     assign: assign,
     // content loading
-    loadVendors: loadVendors, parseDoc: parseDoc, config: config,
+    config: config,
     collection: collection, item: item, list: list, page: page, data: data,
     // markdown + images
     renderMarkdown: renderMarkdown, renderInline: renderInline, cover: cover,

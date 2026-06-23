@@ -43,20 +43,20 @@
   <dc-import name="SiteNav" active="NEWPAGE" hint-size="100%,62px"></dc-import>
 
   <section style="max-width:var(--mw); margin:0 auto; padding:64px 32px 28px;">
-    <h1 style="font-family:var(--display); font-size:clamp(38px,5vw,60px); margin:0; letter-spacing:-0.02em; color:#1f1d1a;">New Tab</h1>
-    <p style="font-family:var(--display); font-size:clamp(20px,2.2vw,26px); line-height:1.4; color:#b3ada3; max-width:640px; margin:18px 0 0; text-wrap:pretty;">A short intro. (Move this into content/NEWPAGE/page.md and bind it if you like.)</p>
+    <h1 style="font-family:var(--display); font-size:clamp(38px,5vw,60px); margin:0; letter-spacing:-0.02em; color:var(--ink);">New Tab</h1>
+    <p style="font-family:var(--display); font-size:clamp(20px,2.2vw,26px); line-height:1.4; color:var(--text-ghost); max-width:640px; margin:18px 0 0; text-wrap:pretty;">A short intro. (Move this into content/NEWPAGE/page.md and bind it if you like.)</p>
   </section>
 
   <section style="max-width:var(--mw); margin:0 auto; padding:0 32px 74px;">
     <div id="tplGrid" style="margin-top:10px; display:grid; grid-template-columns:repeat(3,1fr); gap:18px;">
       <sc-for list="{{ items }}" as="it" hint-placeholder-count="6">
-        <a href="#" style="display:block; background:#fff; border:1px solid #e7e4de; border-radius:var(--card-radius); overflow:hidden; box-shadow:0 1px 2px rgba(0,0,0,0.02);" style-hover="border-color:#d4cfc5; box-shadow:0 6px 18px rgba(0,0,0,0.05);">
+        <a href="#" style="display:block; background:var(--surface); border:1px solid var(--border); border-radius:var(--card-radius); overflow:hidden; box-shadow:0 1px 2px rgba(0,0,0,0.02);" style-hover="border-color:var(--border-strong); box-shadow:0 6px 18px rgba(0,0,0,0.05);">
           <div style="position:relative; overflow:hidden; height:150px; background:repeating-linear-gradient(135deg,#edeae4 0 10px,#f5f3ee 10px 20px); display:flex; align-items:center; justify-content:center;">
-            <span style="font-family:ui-monospace,Menlo,monospace; font-size:11px; letter-spacing:0.1em; color:#b3aea4; text-transform:uppercase;">{{ it.art }}</span>{{ it.cover }}
+            <span style="font-family:ui-monospace,Menlo,monospace; font-size:11px; letter-spacing:0.1em; color:var(--text-placeholder); text-transform:uppercase;">{{ it.art }}</span>{{ it.cover }}
           </div>
           <div style="padding:18px 20px 22px;">
-            <div style="font-family:var(--display); font-size:24px; letter-spacing:-0.01em; margin:0 0 8px; color:#1f1d1a;">{{ it.name }}</div>
-            <div style="font-family:var(--ui); font-size:14px; line-height:1.55; color:#74706a;">{{ it.blurb }}</div>
+            <div style="font-family:var(--display); font-size:24px; letter-spacing:-0.01em; margin:0 0 8px; color:var(--ink);">{{ it.name }}</div>
+            <div style="font-family:var(--ui); font-size:14px; line-height:1.55; color:var(--text-muted);">{{ it.blurb }}</div>
           </div>
         </a>
       </sc-for>
