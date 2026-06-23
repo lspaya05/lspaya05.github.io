@@ -2,12 +2,7 @@
  * (cards + reader body) and content/thoughts/page.md (header copy). */
 (function () {
   "use strict";
-  function assign(t) {
-    for (var i = 1; i < arguments.length; i++) {
-      var s = arguments[i]; for (var k in s) t[k] = s[k];
-    }
-    return t;
-  }
+  var assign = Site.assign;
   var CHIP = {
     border: "none", cursor: "pointer", fontFamily: "var(--ui)", fontSize: "13px",
     fontWeight: 500, padding: "8px 15px", borderRadius: "999px",

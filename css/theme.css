@@ -1,0 +1,44 @@
+/* =============================================================================
+ * theme.css — design tokens: the site's single source of truth for color,
+ * typography, and layout. Change the look HERE, not in the templates.
+ *
+ * Loaded first (before base.css) on every page via a <link> resolved through
+ * each page's depth-relative <base href>. A future dark mode can override these
+ * under a [data-theme="dark"] selector without touching any template.
+ * ========================================================================== */
+:root {
+  /* ---- typography + layout ---- */
+  --display: "Newsreader", Georgia, serif;
+  --ui: "Hanken Grotesk", system-ui, sans-serif;
+  --card-radius: 14px;
+  --divider: 1px;
+  --mw: min(1340px, 92vw);
+
+  /* ---- surfaces ---- */
+  --paper: #f7f6f3;          /* page background */
+  --surface: #ffffff;        /* cards / panels */
+  --surface-muted: #f1efe9;  /* code, hover fill, subtle fills */
+  --hover: #fbfaf7;          /* list-row hover */
+
+  /* ---- ink / text ramp (dark -> faint) ---- */
+  --ink: #1f1d1a;            /* primary text / headings */
+  --text: #46423c;          /* body copy */
+  --text-2: #5d5952;         /* secondary body */
+  --text-muted: #74706a;     /* muted */
+  --text-soft: #8b867e;      /* softer labels */
+  --text-faint: #a39e95;     /* faint labels / meta */
+  --text-ghost: #b3ada3;     /* ghost / hero subhead */
+
+  /* ---- borders / hairlines ---- */
+  --border: #e7e4de;         /* default border */
+  --border-subtle: #ece9e3;  /* dividers / tracks */
+  --border-strong: #d4cfc5;  /* hover border */
+  --rule-quote: #d8d3ca;     /* blockquote left rule */
+  --underline: #cfc9bf;      /* link underline decoration */
+  --scroll-thumb: #dcd8d0;   /* scrollbar thumb */
+
+  /* ---- accents + status ---- */
+  --accent: #c8623f;         /* pins / bookmark icon / highlights */
+  --accent-green: #5b8c6e;   /* "working on now" dot */
+  --danger: #b00020;         /* error (reserved) */
+}

@@ -13,6 +13,16 @@
 (function () {
   "use strict";
 
+  /* ---- object assign helper (shared by every page module) ----------------- */
+  // Shallow-copy own+inherited enumerable keys of each source onto target.
+  // Centralized here so page modules don't each carry a private copy.
+  function assign(t) {
+    for (var i = 1; i < arguments.length; i++) {
+      var s = arguments[i]; for (var k in s) t[k] = s[k];
+    }
+    return t;
+  }
+
   /* ---- vendor libraries (lazy-loaded from CDN on first content access) ---- */
   var VENDORS = [
     "https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js",
@@ -116,10 +126,10 @@
     return html;
   }
   // Block-level markdown -> a React <div class="md"> (for modal/reader bodies).
-  function renderMarkdown(md, className) {
+  function renderMarkdown(md) {
     if (!md) return null;
     return getReact().createElement("div", {
-      className: "md" + (className ? " " + className : ""),
+      className: "md",
       dangerouslySetInnerHTML: { __html: sanitizeBlock(md) }
     });
   }
@@ -127,13 +137,12 @@
   // or null when there's no image. Built in JS — NOT as <img src="{{ }}"> in the
   // template — so the browser parser doesn't eagerly fetch the unresolved
   // "{{ ... }}" string (which 404s) before the runtime renders.
-  function cover(src, alt, extraStyle) {
+  function cover(src, alt) {
     if (!src) return null;
     var style = {
       position: "absolute", inset: 0, width: "100%", height: "100%",
       objectFit: "cover", display: "block"
     };
-    if (extraStyle) for (var k in extraStyle) style[k] = extraStyle[k];
     return getReact().createElement("img", { src: src, alt: alt || "", style: style });
   }
 
@@ -152,23 +161,23 @@
     stylesInjected = true;
     var css =
       ".md{font-family:var(--ui);}" +
-      ".md p{font-size:16px;line-height:1.72;color:#46423c;margin:0 0 22px;}" +
-      ".md h2{font-family:var(--display);font-size:30px;letter-spacing:-0.01em;color:#1f1d1a;margin:36px 0 12px;}" +
-      ".md h3{font-family:var(--display);font-size:26px;letter-spacing:-0.01em;color:#1f1d1a;margin:34px 0 10px;}" +
-      ".md a{color:#1f1d1a;text-decoration:underline;text-decoration-color:#cfc9bf;text-underline-offset:2px;}" +
-      ".md strong{color:#1f1d1a;font-weight:600;}" +
+      ".md p{font-size:16px;line-height:1.72;color:var(--text);margin:0 0 22px;}" +
+      ".md h2{font-family:var(--display);font-size:30px;letter-spacing:-0.01em;color:var(--ink);margin:36px 0 12px;}" +
+      ".md h3{font-family:var(--display);font-size:26px;letter-spacing:-0.01em;color:var(--ink);margin:34px 0 10px;}" +
+      ".md a{color:var(--ink);text-decoration:underline;text-decoration-color:var(--underline);text-underline-offset:2px;}" +
+      ".md strong{color:var(--ink);font-weight:600;}" +
       ".md em{font-style:italic;}" +
-      ".md ul,.md ol{font-size:16px;line-height:1.72;color:#46423c;margin:0 0 22px;padding-left:1.3em;}" +
+      ".md ul,.md ol{font-size:16px;line-height:1.72;color:var(--text);margin:0 0 22px;padding-left:1.3em;}" +
       ".md li{margin:0 0 8px;}" +
-      ".md blockquote{margin:30px 0;padding:4px 0 4px 22px;border-left:2px solid #d8d3ca;font-family:var(--display);font-size:21px;line-height:1.5;color:#5d5952;font-style:italic;}" +
-      ".md img{max-width:100%;height:auto;border-radius:12px;border:1px solid #e7e4de;margin:8px 0 24px;}" +
-      ".md iframe{width:100%;aspect-ratio:16/9;border:1px solid #e7e4de;border-radius:12px;background:#000;margin:8px 0 24px;display:block;}" +
-      ".md code{font-family:ui-monospace,Menlo,monospace;font-size:0.9em;background:#f1efe9;padding:1px 5px;border-radius:5px;}" +
-      ".md pre{background:#f1efe9;border:1px solid #e7e4de;border-radius:10px;padding:16px;overflow:auto;margin:0 0 22px;}" +
+      ".md blockquote{margin:30px 0;padding:4px 0 4px 22px;border-left:2px solid var(--rule-quote);font-family:var(--display);font-size:21px;line-height:1.5;color:var(--text-2);font-style:italic;}" +
+      ".md img{max-width:100%;height:auto;border-radius:12px;border:1px solid var(--border);margin:8px 0 24px;}" +
+      ".md iframe{width:100%;aspect-ratio:16/9;border:1px solid var(--border);border-radius:12px;background:#000;margin:8px 0 24px;display:block;}" +
+      ".md code{font-family:ui-monospace,Menlo,monospace;font-size:0.9em;background:var(--surface-muted);padding:1px 5px;border-radius:5px;}" +
+      ".md pre{background:var(--surface-muted);border:1px solid var(--border);border-radius:10px;padding:16px;overflow:auto;margin:0 0 22px;}" +
       ".md pre code{background:none;padding:0;}" +
-      ".md hr{border:none;border-top:1px solid #e7e4de;margin:34px 0;}" +
+      ".md hr{border:none;border-top:1px solid var(--border);margin:34px 0;}" +
       /* tbody alias so the Thoughts reader's measured column matches */
-      ".tbody.md p:first-child{font-family:var(--display);font-size:22px;line-height:1.5;color:#1f1d1a;}";
+      ".tbody.md p:first-child{font-family:var(--display);font-size:22px;line-height:1.5;color:var(--ink);}";
     var s = document.createElement("style");
     s.textContent = css;
     document.head.appendChild(s);
@@ -312,7 +321,7 @@
   }
   function initialState(name) {
     var base = mod(name).state || {};
-    var s = { _data: null, _err: null };
+    var s = { _data: null };
     for (var k in base) s[k] = base[k];
     return s;
   }
@@ -330,7 +339,7 @@
         .then(function (d) { self.setState({ _data: d || {} }); })
         .catch(function (e) {
           console.error("[site] load failed for", name, e);
-          self.setState({ _data: {}, _err: String(e) });
+          self.setState({ _data: {} });
         });
     } else {
       self.setState({ _data: {} });
@@ -368,10 +377,11 @@
 
   /* ---- public API --------------------------------------------------------- */
   window.Site = {
+    // utilities
+    assign: assign,
     // content loading
     loadVendors: loadVendors, parseDoc: parseDoc, config: config,
     collection: collection, list: list, page: page, data: data,
-    asset: resolveAsset,
     // markdown + images
     renderMarkdown: renderMarkdown, renderInline: renderInline, cover: cover,
     // ui helpers

@@ -5,12 +5,7 @@
  *   content/data/pictures.json         (Google Photos slideshow, prefetched) */
 (function () {
   "use strict";
-  function assign(t) {
-    for (var i = 1; i < arguments.length; i++) {
-      var s = arguments[i]; for (var k in s) t[k] = s[k];
-    }
-    return t;
-  }
+  var assign = Site.assign;
   function normPics(arr) {
     return (arr || []).map(function (p) {
       return typeof p === "string" ? { caption: p } : p;

@@ -2,12 +2,7 @@
  * (books, resources, podcasts, articles) + page.md (header copy). */
 (function () {
   "use strict";
-  function assign(t) {
-    for (var i = 1; i < arguments.length; i++) {
-      var s = arguments[i]; for (var k in s) t[k] = s[k];
-    }
-    return t;
-  }
+  var assign = Site.assign;
 
   Site.register("reading", {
     state: { view: "blocks", hoverSeg: null },

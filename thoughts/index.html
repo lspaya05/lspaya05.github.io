@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <base href="../">
 <link rel="icon" href="favicon.svg">
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/base.css">
 <script src="./support.js"></script>
 <script src="./js/app.js"></script>
 <script src="./js/pages/Thoughts.js"></script>
@@ -16,19 +18,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
-  body{margin:0; background:#f7f6f3; color:#1f1d1a; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;}
-  :root{--display:"Newsreader",Georgia,serif; --ui:"Hanken Grotesk",system-ui,sans-serif; --card-radius:14px; --divider:1px; --mw:min(1340px,92vw);}
-  ::selection{background:#1f1d1a; color:#f7f6f3;}
-  a{color:inherit; text-decoration:none;}
-  ::-webkit-scrollbar{width:10px;} ::-webkit-scrollbar-thumb{background:#dcd8d0; border-radius:8px;} ::-webkit-scrollbar-track{background:transparent;}
-  [style*="--card-radius"]:hover:not([style*="repeating-linear"]){ background:#f1efe9 !important; }
-  [style*="repeating-linear"][style*="--card-radius"]:hover{ filter:brightness(0.975); }
   @media (max-width:900px){ #thoughtsCols{columns:2 !important;} }
   @media (max-width:600px){ #thoughtsCols{columns:1 !important;} }
-  @keyframes popfade{from{opacity:0;}to{opacity:1;}}
-  @keyframes poprise{from{opacity:0; transform:translateY(20px) scale(0.99);}to{opacity:1; transform:none;}}
   .tbody p{font-family:var(--ui); font-size:17px; line-height:1.8; color:#3a3731; margin:0 0 24px;}
   .tbody h3{font-family:var(--display); font-size:26px; letter-spacing:-0.01em; color:#1f1d1a; margin:38px 0 12px;}
   .tbody blockquote{margin:30px 0; padding:4px 0 4px 22px; border-left:2px solid #d8d3ca; font-family:var(--display); font-size:21px; line-height:1.5; color:#5d5952; font-style:italic;}

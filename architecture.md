@@ -53,6 +53,10 @@ _template.dc.html           # copy to <newtab>/index.html to create a tab
 SiteNav.dc.html             # nav — renders from site.config.json
 SiteFooter.dc.html          # footer — renders from content/footer/page.md
 
+css/
+  theme.css                 # design tokens (color / type / layout) — the LOOK lives here
+  base.css                  # shared global stylesheet (resets, scrollbar, animations)
+
 js/
   app.js                    # window.Site: content loading, markdown, plumbing, UI helpers
   pages/
@@ -114,10 +118,16 @@ lets shared components live at the root while pages nest.) A site-wide guard in
    ```html
    <base href="../">                            <!-- ./ on the home page -->
    <link rel="icon" href="favicon.svg">         <!-- resolves via <base> -->
+   <link rel="stylesheet" href="css/theme.css"> <!-- design tokens -->
+   <link rel="stylesheet" href="css/base.css">  <!-- shared global styles -->
    <script src="./support.js"></script>        <!-- runtime -->
    <script src="./js/app.js"></script>          <!-- window.Site -->
    <script src="./js/pages/Projects.js"></script>
    ```
+   Each page's inline `<style>` now holds only page-specific rules (grid
+   breakpoints, the Thoughts reader type, the restaurants map). Global resets,
+   the scrollbar, card-hover, and the modal/slide `@keyframes` live in
+   `css/base.css`; all colors/fonts/spacing tokens live in `css/theme.css`.
 2. The page's `<script data-dc-script>` is a uniform shim:
    ```js
    class Component extends DCLogic {
@@ -269,6 +279,7 @@ Run the workflow manually from the **Actions** tab (`workflow_dispatch`).
 | `Site.renderMarkdown(md)` | Sanitized block Markdown → `<div class="md">`. |
 | `Site.renderInline(md)` | Sanitized inline Markdown → `<span>`. |
 | `Site.cover(src, alt)` | A cover `<img>` React element (absolute-fill) for a `{{ x.cover }}` slot, or `null` when no image. Built in JS so templates never eager-fetch a `{{ }}` `src`. |
+| `Site.assign(t, …src)` | Shallow-merge helper (shared by every page module). |
 | `Site.segmented(self,{def})` | The shared Blocks/List toggle (styles + handlers). |
 | `Site.modalControls(self,key)` | `open/close/stop` + `isOpen/item`; Esc + scroll-lock handled by base plumbing when the module sets `modalKey`. |
 | `Site.register / initialState / mount / updated / unmount / render` | Page registry + async render plumbing. |

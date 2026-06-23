@@ -1,0 +1,30 @@
+/* =============================================================================
+ * base.css — shared global stylesheet, formerly copy-pasted into every page's
+ * inline <style>. References the design tokens from theme.css (loaded first).
+ *
+ * Page-specific rules (grid @media breakpoints, .tbody reader type, the
+ * restaurants map full-bleed, etc.) stay inline in each page's <style>.
+ * ========================================================================== */
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+::selection { background: var(--ink); color: var(--paper); }
+a { color: inherit; text-decoration: none; }
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-thumb { background: var(--scroll-thumb); border-radius: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+
+/* card hover affordances (driven by the presence of --card-radius in a style) */
+[style*="--card-radius"]:hover:not([style*="repeating-linear"]) { background: var(--surface-muted) !important; }
+[style*="repeating-linear"][style*="--card-radius"]:hover { filter: brightness(0.975); }
+
+/* shared modal / slide animations */
+@keyframes popfade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes poprise { from { opacity: 0; transform: translateY(20px) scale(0.99); } to { opacity: 1; transform: none; } }
+@keyframes mfade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }

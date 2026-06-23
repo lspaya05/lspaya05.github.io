@@ -2,12 +2,6 @@
  * pages use (first-N), plus hero/bio copy from content/home/page.md. */
 (function () {
   "use strict";
-  function assign(t) {
-    for (var i = 1; i < arguments.length; i++) {
-      var s = arguments[i]; for (var k in s) t[k] = s[k];
-    }
-    return t;
-  }
   function first(a, n) { return (a || []).slice(0, n); }
 
   Site.register("home", {
