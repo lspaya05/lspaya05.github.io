@@ -15,8 +15,8 @@
   --mw: min(1340px, 92vw);
 
   /* ---- surfaces ---- */
-  --paper: #f7f6f3;          /* page background */
-  --surface: #ffffff;        /* cards / panels */
+  --paper: #ffffff;          /* page background */
+  --surface: #fdfdfc;        /* cards / panels — barely greyer than the white page */
   --surface-muted: #f1efe9;  /* code, hover fill, subtle fills */
   --hover: #fbfaf7;          /* list-row hover */
 

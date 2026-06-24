@@ -18,9 +18,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  /* full-bleed the static map.html iframe injected into the restaurants panel */
-  #restaurants .md{position:absolute; inset:0; margin:0;}
-  #restaurants .md iframe{height:100%; aspect-ratio:auto; margin:0; border:0; border-radius:0; background:#000;}
+  /* full-bleed the static map.html iframe injected into the restaurants panel.
+     The My Maps embed has a ~64px title banner across the top; we clip it by
+     overflowing the wrapper and shifting the iframe up so only the map shows. */
+  #restaurants .md{position:absolute; inset:0; margin:0; overflow:hidden;}
+  #restaurants .md iframe{position:absolute; left:0; top:-64px; width:100%; height:calc(100% + 64px); aspect-ratio:auto; margin:0; border:0; border-radius:0; background:#000;}
   @media (max-width:820px){ #miscBento{grid-template-columns:1fr !important;} #miscBento > div{grid-column:auto !important;} }
 </style>
 </helmet>
@@ -69,12 +71,12 @@
       </div>
 
       <!-- BIKING (curated rides — compact) -->
-      <div id="biking" style="grid-column:span 4; min-height:300px; display:flex; flex-direction:column; border:1px solid var(--border); border-radius:18px; background:var(--surface); box-shadow:0 1px 2px rgba(0,0,0,0.02); padding:28px 28px 26px;">
+      <div id="biking" style="grid-column:span 4; height:390px; display:flex; flex-direction:column; border:1px solid var(--border); border-radius:18px; background:var(--surface); box-shadow:0 1px 2px rgba(0,0,0,0.02); padding:28px 28px 26px;">
         <div style="display:flex; align-items:center; justify-content:space-between;">
           <div style="font-family:var(--display); font-size:28px; letter-spacing:-0.015em; color:var(--ink);">{{ bikingTitle }}</div>
           <span style="font-family:var(--ui); font-size:11px; font-weight:600; letter-spacing:0.04em; color:var(--text-soft); background:var(--surface-muted); padding:4px 10px; border-radius:999px;">selected rides</span>
         </div>
-        <div style="display:flex; flex-direction:column; gap:12px; margin-top:16px; overflow:auto;">
+        <div style="display:flex; flex-direction:column; gap:12px; margin-top:16px; flex:1; min-height:0; overflow-y:auto;">
           <sc-for list="{{ rides }}" as="r" hint-placeholder-count="3">
             <a href="{{ r.link }}" target="_blank" rel="noopener" style="padding:16px 18px; border:1px solid var(--border-subtle); border-radius:12px; display:flex; align-items:center; justify-content:space-between; gap:14px; transition:border-color .2s ease;" style-hover="border-color:var(--border-strong);">
               <div style="min-width:0;">
@@ -88,11 +90,11 @@
       </div>
 
       <!-- RESTAURANTS (recommendations + static My Maps embed) -->
-      <div id="restaurants" style="grid-column:span 8; min-height:300px; display:grid; grid-template-columns:minmax(220px,300px) 1fr; border:1px solid var(--border); border-radius:18px; background:var(--surface); box-shadow:0 1px 2px rgba(0,0,0,0.02); overflow:hidden;">
-        <div style="padding:26px 26px; display:flex; flex-direction:column; min-width:0;">
+      <div id="restaurants" style="grid-column:span 8; height:390px; display:grid; grid-template-columns:minmax(220px,300px) 1fr; border:1px solid var(--border); border-radius:18px; background:var(--surface); box-shadow:0 1px 2px rgba(0,0,0,0.02); overflow:hidden;">
+        <div style="padding:26px 26px; display:flex; flex-direction:column; min-width:0; min-height:0; overflow:hidden;">
           <div style="font-family:var(--display); font-size:26px; letter-spacing:-0.015em; color:var(--ink);">{{ restaurantsTitle }}</div>
           <div style="font-family:var(--ui); font-size:13px; color:var(--text-faint); margin:4px 0 16px;">{{ restaurantsSub }}</div>
-          <div style="display:flex; flex-direction:column; gap:11px; overflow:auto;">
+          <div style="display:flex; flex-direction:column; gap:11px; flex:1; min-height:0; overflow-y:auto; padding-right:6px;">
             <sc-for list="{{ spots }}" as="s" hint-placeholder-count="6">
               <div style="display:flex; align-items:baseline; gap:9px;">
                 <span style="flex:none; width:7px; height:7px; border-radius:50%; background:var(--accent); transform:translateY(-2px);"></span>

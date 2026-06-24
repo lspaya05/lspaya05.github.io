@@ -1,5 +1,5 @@
 {
-  "brand": "Leonard",
+  "brand": "Leonard Paya",
   "sections": [
     { "key": "home",     "label": "Home",     "href": "." },
     { "key": "projects", "label": "Projects", "href": "projects/" },

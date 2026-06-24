@@ -12,9 +12,13 @@
         Site.collection("projects").catch(function () { return []; }),
         Site.collection("thoughts").catch(function () { return []; }),
         Site.collection("reading/books").catch(function () { return []; }),
-        Site.page("home")
+        Site.page("home"),
+        Site.page("footer").catch(function () { return { data: {} }; })
       ]).then(function (r) {
-        return { projects: r[0], thoughts: r[1], books: r[2], copy: r[3].data || {} };
+        return {
+          projects: r[0], thoughts: r[1], books: r[2],
+          copy: r[3].data || {}, footer: r[4].data || {}
+        };
       });
     },
 
@@ -35,6 +39,7 @@
       });
       var ft = (d.thoughts || [])[0] || {};
       var fb = (d.books || [])[0] || {};
+      var f = d.footer || {};
 
       return {
         projects: projects, thoughts: thoughts, reading: reading,
@@ -44,7 +49,10 @@
         featThoughtTitle: ft.title || "",
         featThoughtBlurb: Site.renderInline(ft.excerpt || ""),
         featBookTitle: fb.title || "",
-        featBookAuthor: fb.author || ""
+        featBookAuthor: fb.author || "",
+        githubHref: f.github || "#",
+        linkedinHref: f.linkedin || "#",
+        emailHref: f.email || "#"
       };
     }
   });
