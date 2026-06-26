@@ -1,8 +1,8 @@
 /* Misc page logic. Data:
  *   content/misc/restaurants/index.md  (map pin list) + restaurants/map.html (embed)
  *   content/misc/rides/<slug>/         (curated biking rides — modular collection)
- *   content/misc/page.md               (copy + fallbacks)
- *   content/data/pictures.json         (Google Photos slideshow, prefetched) */
+ *   content/misc/pictures/index.md     (slideshow photos: caption + ./images/<file>)
+ *   content/misc/page.md               (copy + fallbacks) */
 (function () {
   "use strict";
   var assign = Site.assign;
@@ -17,20 +17,21 @@
     return p.length ? p : [{ caption: "" }];
   }
   Site.register("misc", {
-    state: { slide: 0 },
+    modalKey: "map",
+    state: { slide: 0, map: null },
 
     load: function () {
       return Promise.all([
         Site.list("misc/restaurants", "index.md").catch(function () { return { items: [] }; }),
         Site.page("misc"),
-        Site.data("pictures.json"),
+        Site.list("misc/pictures", "index.md").catch(function () { return { items: [] }; }),
         Site.collection("misc/rides").catch(function () { return []; }),
         fetch("content/misc/restaurants/map.html").then(function (r) {
           return r.ok ? r.text() : "";
         }).catch(function () { return ""; })
       ]).then(function (r) {
         return {
-          spots: r[0].items, copy: r[1].data || {}, pictures: r[2],
+          spots: r[0].items, copy: r[1].data || {}, pictures: r[2].items,
           rides: r[3], mapHtml: r[4]
         };
       });
@@ -46,6 +47,7 @@
 
     build: function (self, d) {
       var copy = d.copy || {};
+      var modal = Site.modalControls(self, "map");
       var p = pics(self);
       var len = p.length;
       var i = (((self.state.slide || 0) % len) + len) % len;
@@ -90,10 +92,18 @@
         restaurantsSub: copy.restaurants_sub || "",
         // biking — curated rides collection
         bikingTitle: copy.biking_title || "Biking",
+        bikingSub: copy.biking_sub || "Selected rides",
         rides: rides,
         // restaurants: pin list + static My Maps embed (content/misc/restaurants/map.html)
         spots: d.spots || [],
-        mapEmbed: d.mapHtml ? Site.renderMarkdown(d.mapHtml) : null
+        mapEmbed: d.mapHtml ? Site.renderMarkdown(d.mapHtml) : null,
+        // click-to-enlarge: same embed in a styled modal card (separate element
+        // so both the inline preview and the modal can mount at once)
+        mapEmbedModal: d.mapHtml ? Site.renderMarkdown(d.mapHtml) : null,
+        openMap: modal.open(true),
+        mapModalOpen: modal.isOpen,
+        closeMap: modal.close,
+        stopMap: modal.stop
       };
     }
   });

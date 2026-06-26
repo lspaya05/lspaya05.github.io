@@ -202,6 +202,29 @@
     items.sort(function (a, b) { return (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0); });
     return items;
   }
+
+  // Books order (shared by the Reading list and the Home page): `bookmarked`
+  // first, then newest read-date (`when`) first. `when` parses "Feb. 2025",
+  // "Sept 2024", "Jan 2026", bare years, "Now" (newest) and "Someday"/blank
+  // (oldest). Comparator is NaN-safe so ±Infinity ties don't scramble order.
+  var BOOK_MONTHS = { jan: 0, feb: 1, mar: 2, apr: 3, may: 4, jun: 5, jul: 6, aug: 7, sep: 8, oct: 9, nov: 10, dec: 11 };
+  function bookWhenTs(w) {
+    var s = String(w || "").trim().toLowerCase().replace(/\./g, "");
+    if (!s || s === "someday") return -Infinity;
+    if (s === "now") return Infinity;
+    var m = /^([a-z]+)\s+(\d{4})$/.exec(s);
+    if (m && BOOK_MONTHS[m[1].slice(0, 3)] != null) return new Date(+m[2], BOOK_MONTHS[m[1].slice(0, 3)], 1).getTime();
+    if (/^\d{4}$/.test(s)) return new Date(+s, 0, 1).getTime();
+    return -Infinity;
+  }
+  function sortBooks(books) {
+    books.sort(function (a, b) {
+      var x = bookWhenTs(a.when), y = bookWhenTs(b.when);
+      return x === y ? 0 : (x > y ? -1 : 1);
+    });
+    books.sort(function (a, b) { return (b.bookmarked ? 1 : 0) - (a.bookmarked ? 1 : 0); });
+    return books;
+  }
   // Per-item collection. Each item is its own folder: content/<name>/<slug>/,
   // with index.md the content and any co-located assets (cover.png, etc.).
   //
@@ -289,11 +312,6 @@
       .then(function () { return fetchText("content/" + name + "/page.md"); })
       .then(function (text) { return parseDoc(text); })
       .catch(function () { return { data: {}, body: "" }; });
-  }
-
-  // Prefetched integration JSON (content/data/<file>); null if absent.
-  function data(file) {
-    return fetchJSON("content/data/" + file).catch(function () { return null; });
   }
 
   /* ---- segmented Blocks/List toggle (shared) ------------------------------ */
@@ -420,11 +438,11 @@
     assign: assign,
     // content loading
     config: config,
-    collection: collection, item: item, list: list, page: page, data: data,
+    collection: collection, item: item, list: list, page: page,
     // markdown + images
     renderMarkdown: renderMarkdown, renderInline: renderInline, cover: cover,
     // ui helpers
-    segmented: segmented, modalControls: modalControls,
+    segmented: segmented, modalControls: modalControls, sortBooks: sortBooks,
     // page plumbing
     register: register, initialState: initialState, mount: mount,
     updated: updated, unmount: unmount, render: render

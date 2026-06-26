@@ -14,6 +14,7 @@
 <body>
 <x-dc>
 <helmet>
+<title>Misc · Leonard Paya</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -24,6 +25,27 @@
   #restaurants .md{position:absolute; inset:0; margin:0; overflow:hidden;}
   #restaurants .md iframe{position:absolute; left:0; top:-64px; width:100%; height:calc(100% + 64px); aspect-ratio:auto; margin:0; border:0; border-radius:0; background:#000;}
   @media (max-width:820px){ #miscBento{grid-template-columns:1fr !important;} #miscBento > div{grid-column:auto !important;} }
+  /* enlarged map inside the modal card — same banner-clip trick as the inline panel */
+  #mapModalView{position:relative; width:100%; height:min(78vh,760px); overflow:hidden; background:#000;}
+  #mapModalView .md{position:absolute; inset:0; margin:0; overflow:hidden;}
+  #mapModalView .md iframe{position:absolute; left:0; top:-64px; width:100%; height:calc(100% + 64px); aspect-ratio:auto; margin:0; border:0; border-radius:0; background:#000;}
+  /* zoom out the Bellevue-Mercer route map a touch: show the whole route
+     (contain) instead of cropping to fill (cover), on a clean backdrop. */
+  #biking img[src$="bellevue-mercer.png"]{object-fit:contain !important; background:#eef0f1;}
+  /* auto-hide scrollbars in the bento blocks. The scrollbar's space is reserved
+     permanently (scrollbar-gutter: stable both-edges) so nothing ever reflows;
+     only the thumb's color toggles, so it simply *appears* on block hover.
+     "both-edges" keeps the reserved space symmetric on the left and right. */
+  .autoscroll{scrollbar-gutter:stable both-edges; scrollbar-width:thin; scrollbar-color:transparent transparent;}
+  .autoscroll::-webkit-scrollbar{width:8px;}
+  .autoscroll::-webkit-scrollbar-thumb{background:transparent; border-radius:999px;}
+  .autoscroll::-webkit-scrollbar-track{background:transparent;}
+  #people:hover .autoscroll,
+  #biking:hover .autoscroll,
+  #restaurants:hover .autoscroll{scrollbar-color:var(--scroll-thumb) transparent;}
+  #people:hover .autoscroll::-webkit-scrollbar-thumb,
+  #biking:hover .autoscroll::-webkit-scrollbar-thumb,
+  #restaurants:hover .autoscroll::-webkit-scrollbar-thumb{background:var(--scroll-thumb);}
 </style>
 </helmet>
 
@@ -45,7 +67,7 @@
       <div id="people" style="grid-column:span 7; min-height:384px; display:flex; flex-direction:column; border:1px solid var(--border); border-radius:18px; background:var(--surface); box-shadow:0 1px 2px rgba(0,0,0,0.02); padding:32px 34px;">
         <div style="font-family:var(--display); font-size:32px; letter-spacing:-0.015em; color:var(--ink);">{{ peopleTitle }}</div>
         <div style="font-family:var(--ui); font-size:13px; color:var(--text-faint); margin:6px 0 22px;">{{ peopleSub }}</div>
-        <p style="font-family:var(--ui); font-size:15px; line-height:1.95; color:var(--text); margin:0; max-width:560px;">{{ peopleProse }}</p>
+        <p class="autoscroll" style="font-family:var(--ui); font-size:15px; line-height:1.95; color:var(--text); margin:0; max-height:13.65em; overflow-y:auto;">{{ peopleProse }}</p>
       </div>
 
       <!-- PICTURES (slideshow) -->
@@ -59,9 +81,9 @@
         </div>
         <div style="position:relative; flex:1; margin:0 26px 22px; border-radius:12px; overflow:hidden; background:repeating-linear-gradient(135deg,#e7e3db 0 12px,#efeae3 12px 24px);">
           <span style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-family:ui-monospace,Menlo,monospace; font-size:11px; letter-spacing:0.1em; color:var(--text-placeholder); text-transform:uppercase;">photo</span>{{ slideCover }}
-          <div key="{{ slideKey }}" style="position:absolute; left:14px; bottom:48px; animation:mfade 0.5s ease; font-family:var(--display); font-size:21px; color:#2a2722; background:rgba(247,246,243,0.86); padding:5px 12px; border-radius:9px;">{{ slideCap }}</div>
-          <button onClick="{{ prev }}" aria-label="Previous" style="position:absolute; left:12px; top:50%; transform:translateY(-50%); width:34px; height:34px; border-radius:50%; border:none; background:rgba(255,255,255,0.9); color:var(--ink-soft); font-size:16px; cursor:pointer; box-shadow:0 1px 4px rgba(0,0,0,0.12);">&#8249;</button>
-          <button onClick="{{ next }}" aria-label="Next" style="position:absolute; right:12px; top:50%; transform:translateY(-50%); width:34px; height:34px; border-radius:50%; border:none; background:rgba(255,255,255,0.9); color:var(--ink-soft); font-size:16px; cursor:pointer; box-shadow:0 1px 4px rgba(0,0,0,0.12);">&#8250;</button>
+          <div key="{{ slideKey }}" style="position:absolute; left:14px; bottom:30px; animation:mfade 0.5s ease; font-family:var(--display); font-size:13px; color:#2a2722; background:rgba(247,246,243,0.72); padding:5px 12px; border-radius:9px;">{{ slideCap }}</div>
+          <button onClick="{{ prev }}" aria-label="Previous" style="position:absolute; left:12px; top:50%; transform:translateY(-50%); width:26px; height:26px; border-radius:50%; border:none; background:rgba(255,255,255,0.65); color:var(--ink-soft); font-size:13px; cursor:pointer; box-shadow:0 1px 4px rgba(0,0,0,0.12);">&#8249;</button>
+          <button onClick="{{ next }}" aria-label="Next" style="position:absolute; right:12px; top:50%; transform:translateY(-50%); width:26px; height:26px; border-radius:50%; border:none; background:rgba(255,255,255,0.65); color:var(--ink-soft); font-size:13px; cursor:pointer; box-shadow:0 1px 4px rgba(0,0,0,0.12);">&#8250;</button>
           <div style="position:absolute; left:0; right:0; bottom:14px; display:flex; gap:7px; justify-content:center;">
             <sc-for list="{{ dots }}" as="d" hint-placeholder-count="5">
               <button onClick="{{ d.onClick }}" aria-label="Go to slide" style="{{ d.style }}"></button>
@@ -71,12 +93,10 @@
       </div>
 
       <!-- BIKING (curated rides — compact) -->
-      <div id="biking" style="grid-column:span 4; height:390px; display:flex; flex-direction:column; border:1px solid var(--border); border-radius:18px; background:var(--surface); box-shadow:0 1px 2px rgba(0,0,0,0.02); padding:28px 28px 26px;">
-        <div style="display:flex; align-items:center; justify-content:space-between;">
-          <div style="font-family:var(--display); font-size:28px; letter-spacing:-0.015em; color:var(--ink);">{{ bikingTitle }}</div>
-          <span style="font-family:var(--ui); font-size:11px; font-weight:600; letter-spacing:0.04em; color:var(--text-soft); background:var(--surface-muted); padding:4px 10px; border-radius:999px;">selected rides</span>
-        </div>
-        <div style="display:flex; flex-direction:column; gap:12px; margin-top:16px; flex:1; min-height:0; overflow-y:auto;">
+      <div id="biking" style="grid-column:span 4; height:415px; display:flex; flex-direction:column; border:1px solid var(--border); border-radius:18px; background:var(--surface); box-shadow:0 1px 2px rgba(0,0,0,0.02); padding:28px 28px 26px;">
+        <div style="font-family:var(--display); font-size:28px; letter-spacing:-0.015em; color:var(--ink);">{{ bikingTitle }}</div>
+        <div style="font-family:var(--ui); font-size:13px; color:var(--text-faint); margin-top:2px;">{{ bikingSub }}</div>
+        <div class="autoscroll" style="display:flex; flex-direction:column; gap:12px; margin-top:16px; flex:1; min-height:0; overflow-y:auto;">
           <sc-for list="{{ rides }}" as="r" hint-placeholder-count="3">
             <a href="{{ r.link }}" target="_blank" rel="noopener" style="padding:16px 18px; border:1px solid var(--border-subtle); border-radius:12px; display:flex; align-items:center; justify-content:space-between; gap:14px; transition:border-color .2s ease;" style-hover="border-color:var(--border-strong);">
               <div style="min-width:0;">
@@ -90,11 +110,11 @@
       </div>
 
       <!-- RESTAURANTS (recommendations + static My Maps embed) -->
-      <div id="restaurants" style="grid-column:span 8; height:390px; display:grid; grid-template-columns:minmax(220px,300px) 1fr; border:1px solid var(--border); border-radius:18px; background:var(--surface); box-shadow:0 1px 2px rgba(0,0,0,0.02); overflow:hidden;">
+      <div id="restaurants" style="grid-column:span 8; height:415px; display:grid; grid-template-columns:minmax(220px,300px) 1fr; border:1px solid var(--border); border-radius:18px; background:var(--surface); box-shadow:0 1px 2px rgba(0,0,0,0.02); overflow:hidden;">
         <div style="padding:26px 26px; display:flex; flex-direction:column; min-width:0; min-height:0; overflow:hidden;">
           <div style="font-family:var(--display); font-size:26px; letter-spacing:-0.015em; color:var(--ink);">{{ restaurantsTitle }}</div>
           <div style="font-family:var(--ui); font-size:13px; color:var(--text-faint); margin:4px 0 16px;">{{ restaurantsSub }}</div>
-          <div style="display:flex; flex-direction:column; gap:11px; flex:1; min-height:0; overflow-y:auto; padding-right:6px;">
+          <div class="autoscroll" style="display:flex; flex-direction:column; gap:11px; flex:1; min-height:0; overflow-y:auto; padding-right:6px; margin-bottom:27px;">
             <sc-for list="{{ spots }}" as="s" hint-placeholder-count="6">
               <div style="display:flex; align-items:baseline; gap:9px;">
                 <span style="flex:none; width:7px; height:7px; border-radius:50%; background:var(--accent); transform:translateY(-2px);"></span>
@@ -108,11 +128,29 @@
         </div>
         <div style="position:relative; min-height:300px; border-left:1px solid var(--border-subtle);">
           <span style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-family:ui-monospace,Menlo,monospace; font-size:11px; letter-spacing:0.1em; color:var(--text-placeholder); text-transform:uppercase;">map</span>{{ mapEmbed }}
+          <div onClick="{{ openMap }}" title="Click to enlarge" style="position:absolute; inset:0; z-index:3; cursor:zoom-in;"></div>
+          <button onClick="{{ openMap }}" aria-label="Enlarge map" style="position:absolute; z-index:4; bottom:12px; right:12px; display:flex; align-items:center; gap:6px; font-family:var(--ui); font-size:12px; font-weight:600; color:var(--ink-soft); background:rgba(247,246,243,0.92); -webkit-backdrop-filter:blur(4px); backdrop-filter:blur(4px); border:1px solid var(--border); border-radius:999px; padding:7px 12px; cursor:pointer; box-shadow:0 1px 4px rgba(0,0,0,0.12);"><span style="font-size:14px; line-height:1;">&#10530;</span> Enlarge</button>
         </div>
       </div>
 
     </div>
   </section>
+
+  <!-- ENLARGED MAP MODAL (click the restaurants map) -->
+  <sc-if value="{{ mapModalOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeMap }}" style="position:fixed; inset:0; z-index:100; background:rgba(31,29,26,0.34); -webkit-backdrop-filter:blur(3px); backdrop-filter:blur(3px); display:flex; align-items:center; justify-content:center; padding:40px 22px; overflow:auto; animation:popfade .25s ease;">
+      <div onClick="{{ stopMap }}" style="position:relative; width:min(1100px,95vw); margin:auto; background:var(--paper); border:1px solid var(--border); border-radius:18px; box-shadow:0 30px 80px rgba(0,0,0,0.28); overflow:hidden; animation:poprise .3s cubic-bezier(.2,.7,.3,1);">
+        <button onClick="{{ closeMap }}" aria-label="Close" style="position:absolute; top:18px; right:18px; z-index:6; width:38px; height:38px; border-radius:50%; border:1px solid var(--border); background:rgba(247,246,243,0.92); -webkit-backdrop-filter:blur(4px); backdrop-filter:blur(4px); color:var(--ink-soft); font-size:20px; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center;">&times;</button>
+        <div style="padding:22px 26px 16px; border-bottom:1px solid var(--border-subtle);">
+          <div style="font-family:var(--display); font-size:26px; letter-spacing:-0.015em; color:var(--ink);">{{ restaurantsTitle }}</div>
+          <div style="font-family:var(--ui); font-size:13px; color:var(--text-faint); margin-top:3px;">{{ restaurantsSub }}</div>
+        </div>
+        <div id="mapModalView">
+          <span style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-family:ui-monospace,Menlo,monospace; font-size:11px; letter-spacing:0.1em; color:var(--text-placeholder); text-transform:uppercase;">map</span>{{ mapEmbedModal }}
+        </div>
+      </div>
+    </div>
+  </sc-if>
 
   <dc-import name="SiteFooter" hint-size="100%,200px"></dc-import>
 

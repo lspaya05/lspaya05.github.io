@@ -17,7 +17,7 @@ page templates.
 |---|---|
 | Add a project | Copy the `content/projects/_template/` folder → `content/projects/my-thing/` (keep `index.md`), edit, drop any images in the folder, push. |
 | Add a blog post / thought | Copy `content/thoughts/_template/` → `content/thoughts/my-post/`, edit `index.md`, push. |
-| Add a book | Copy `content/reading/books/_template/` → `content/reading/books/<slug>/`, edit `index.md`, drop a `cover.jpg` in the folder. |
+| Add a book | Add an entry under `items:` in `content/reading/books/index.md`; drop its cover in `content/reading/books/images/` and reference it `./images/<file>`. |
 | Add an article / podcast / resource | Add an entry under `items:` in the relevant single list file (e.g. `content/reading/articles.md`). |
 | Add a restaurant pin | Add an entry under `items:` in `content/misc/restaurants/index.md` (the map itself is `restaurants/map.html`). |
 | Add a biking ride | Copy `content/misc/rides/_template/` → `rides/<slug>/`, edit `index.md`, drop a route image in the folder. |
@@ -84,17 +84,16 @@ content/
   thoughts/                 # PER-ITEM FOLDERS (+ manifest.json)
     _template/index.md   digital-notebook/index.md   …
   reading/                  # LIST files: resources.md podcasts.md articles.md + page.md
-    books/                  # PER-ITEM FOLDERS (+ manifest.json)
-      _template/index.md   pilgrim-at-tinker-creek/index.md   …
+    books/                  # books LIST file: index.md (items: array) + images/ covers
+      index.md   images/
   misc/                     # page.md (copy + fallbacks)
     rides/                  #   PER-ITEM FOLDERS — curated biking rides
     restaurants/            #   index.md (pin list) + map.html (My Maps embed)
-  data/                     # pictures.json (Google Photos) — committed
-                            #   placeholder, overwritten by the prefetch Action
+    pictures/               #   index.md (items: caption + image) + images/ photos
 
 .github/
-  workflows/ build-manifests.yml  prefetch-data.yml
-  scripts/   build-manifests.mjs  photos.mjs
+  workflows/ build-manifests.yml
+  scripts/   build-manifests.mjs
 ```
 
 ---
@@ -196,7 +195,7 @@ written literally in the template would make the browser eagerly fetch the
 See `content/projects/_template/index.md` and `content/thoughts/_template/index.md`
 for the full annotated field list.
 
-### List files (articles, podcasts, resources, restaurants)
+### List files (books, articles, podcasts, resources, restaurants)
 
 For link-only collections (no per-item assets), a single file whose frontmatter
 holds an `items:` array. No body needed.
@@ -216,7 +215,15 @@ shown in the icon/cover box; omit to keep the gradient placeholder). Drop list
 thumbnails in **`content/reading/images/`** and reference them `./images/<file>`
 (resolved relative to `content/reading/`, like any list `image`).
 
-(Books, projects, and thoughts use per-item **folders** instead — see above.)
+**Books** are a list file too — `content/reading/books/index.md` — with one
+`items:` entry per book: `title`, `author`, `status` (Reading | Read | Re-read |
+Shelf), `when`, `link` (clicking the cover/row opens it — e.g. the Amazon page),
+and `image:` — either `./images/<file>` (covers live in
+`content/reading/books/images/`) or a full image URL (e.g. an Open Library
+cover). The "N read this year" count tallies `Read`/`Re-read` books whose `when`
+year matches the current year. Leave `status`/`when` blank to fill in later.
+
+(Projects and thoughts use per-item **folders** instead — see above.)
 
 ---
 
@@ -268,20 +275,11 @@ template/module on `Projects` — including its modal.)
 
 ## Integrations (GitHub Actions)
 
-Static hosting can't hold secrets, so a scheduled Action prefetches data into
-`content/data/*.json`; the browser only ever reads plain JSON. The step
-**skips itself** if its secrets aren't set, so nothing breaks before setup.
-Until then, the page uses the `*_fallback` values in `content/misc/page.md`.
-
-### Google Photos → `pictures.json`  (Misc "Pictures" slideshow)
-Secrets: `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `GOOGLE_REFRESH_TOKEN`,
-`GOOGLE_PHOTOS_ALBUM_ID`. Enable the Photos Library API, create OAuth creds, and
-capture a refresh token with scope `photoslibrary.readonly`.
-**Caveat:** Photos `baseUrl`s expire ~60 min. The daily build can outlast them;
-if images break, run the workflow more often or change `photos.mjs` to download
-the bytes into `assets/photos/` and emit local paths.
-
-Run the workflow manually from the **Actions** tab (`workflow_dispatch`).
+### Misc "Pictures" slideshow
+Photos are committed to the repo. List them in `content/misc/pictures/index.md`
+(`items:` array of `caption` + `image: ./images/<file>`); the image files live
+in `content/misc/pictures/images/`. While that list is empty the slideshow falls
+back to the `pictures_fallback` captions in `content/misc/page.md`.
 
 > **Biking** is no longer a Strava integration — it's a curated collection.
 > Add a ride by copying `content/misc/rides/_template/` → `rides/<slug>/` with an
@@ -293,11 +291,10 @@ Run the workflow manually from the **Actions** tab (`workflow_dispatch`).
 
 | Method | Purpose |
 |---|---|
-| `Site.collection(name)` | Load a per-item folder collection (`name` may be nested, e.g. `"reading/books"`): reads `manifest.json` → sorted `[{slug, …frontmatter, image}]`. A **rich** manifest (array of objects, see below) is used as-is — no per-item fetch, `body` is omitted. A legacy **slug-list** manifest (array of strings) falls back to fetching+parsing each `<slug>/index.md` (and includes `body`). `image: ./x.png` resolves against the item's own folder at runtime either way. |
+| `Site.collection(name)` | Load a per-item folder collection (`name` may be nested): reads `manifest.json` → sorted `[{slug, …frontmatter, image}]`. A **rich** manifest (array of objects, see below) is used as-is — no per-item fetch, `body` is omitted. A legacy **slug-list** manifest (array of strings) falls back to fetching+parsing each `<slug>/index.md` (and includes `body`). `image: ./x.png` resolves against the item's own folder at runtime either way. |
 | `Site.item(name, slug)` | Lazily fetch+parse one item's `index.md` → `{…frontmatter, body, image, _base}`. Used when a modal/reader needs the full **body** (rich manifests omit it): Projects modal, Thoughts reader. |
 | `Site.list(name, file)` | Load a single list file → `{items, meta, intro}`. |
 | `Site.page(name)` | Load `content/<name>/page.md` → `{data, body}`. |
-| `Site.data(file)` | Load `content/data/<file>`; `null` if absent (used for graceful fallback). |
 | `Site.config()` | Cached `site.config.json`. |
 | `Site.renderMarkdown(md)` | Sanitized block Markdown → `<div class="md">`. |
 | `Site.renderInline(md)` | Sanitized inline Markdown → `<span>`. |
