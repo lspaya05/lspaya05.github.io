@@ -11,6 +11,7 @@
   --display: "Newsreader", Georgia, serif;
   --ui: "Hanken Grotesk", system-ui, sans-serif;
   --card-radius: 14px;
+  --panel-radius: 18px;      /* large misc bento panels + modal cards */
   --divider: 1px;
   --mw: min(1340px, 92vw);
 
@@ -42,4 +43,9 @@
   /* ---- accents + status ---- */
   --accent: #c8623f;         /* pins / bookmark icon / highlights */
   --accent-green: #5b8c6e;   /* "working on now" dot */
+
+  /* ---- placeholder stripe gradients (card covers / thumbs / modal heroes) ---- */
+  --ph-grad:    repeating-linear-gradient(135deg,#edeae4 0 10px,#f5f3ee 10px 20px);
+  --ph-grad-sm: repeating-linear-gradient(135deg,#e9e6df 0 7px,var(--surface-muted) 7px 14px);
+  --ph-grad-lg: repeating-linear-gradient(135deg,#e7e3db 0 12px,#efeae3 12px 24px);
 }

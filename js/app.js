@@ -50,8 +50,14 @@
   }
 
   /* ---- fetch helpers ------------------------------------------------------ */
+  // cache:"no-cache" forces a revalidation (conditional request) on every
+  // content/manifest/config fetch instead of trusting the browser's copy for the
+  // full GitHub Pages max-age=600 window. This stops a returning visitor (within
+  // ~10 min of a deploy) from mixing freshly loaded JS with a stale manifest and
+  // breaking the page. Unchanged files come back as a cheap 304, so it's nearly
+  // free; changed files are picked up immediately instead of after the timer.
   function fetchText(url) {
-    return fetch(url).then(function (r) {
+    return fetch(url, { cache: "no-cache" }).then(function (r) {
       if (!r.ok) throw new Error("HTTP " + r.status + " for " + url);
       return r.text();
     });

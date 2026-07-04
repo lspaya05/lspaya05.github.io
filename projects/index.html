@@ -50,8 +50,8 @@
     <sc-if value="{{ isBlocks }}" hint-placeholder-val="{{ true }}">
       <div id="projGridP" style="display:grid; grid-template-columns:repeat(3,1fr); gap:20px;">
         <sc-for list="{{ projects }}" as="p" hint-placeholder-count="9">
-          <a href="#" onClick="{{ p.open }}" style="display:flex; flex-direction:column; background:var(--surface); border:1px solid var(--border); border-radius:var(--card-radius); overflow:hidden; box-shadow:0 1px 2px rgba(0,0,0,0.02); cursor:pointer;" style-hover="border-color:var(--border-strong); box-shadow:0 8px 22px rgba(0,0,0,0.06);">
-            <div style="position:relative; overflow:hidden; height:166px; background:repeating-linear-gradient(135deg,#edeae4 0 10px,#f5f3ee 10px 20px); display:flex; align-items:center; justify-content:center;">
+          <a href="#" onClick="{{ p.open }}" class="card card--panel card--tint" style="display:flex; flex-direction:column; background:var(--surface); border:1px solid var(--border); border-radius:var(--card-radius); overflow:hidden; box-shadow:0 1px 2px rgba(0,0,0,0.02); cursor:pointer;">
+            <div style="position:relative; overflow:hidden; height:166px; background:var(--ph-grad); display:flex; align-items:center; justify-content:center;">
               <span style="font-family:ui-monospace,Menlo,monospace; font-size:11px; letter-spacing:0.1em; color:var(--text-placeholder); text-transform:uppercase;">{{ p.art }}</span>{{ p.cover }}
             </div>
             <div style="padding:20px 22px 22px; display:flex; flex-direction:column; flex:1;">
@@ -73,7 +73,7 @@
         <sc-for list="{{ projects }}" as="p" hint-placeholder-count="9">
           <a href="#" onClick="{{ p.open }}" style="display:flex; align-items:center; justify-content:space-between; gap:20px; padding:16px 6px; border-bottom:1px solid var(--border-subtle); cursor:pointer; transition:background .2s ease;" style-hover="background:var(--hover);">
             <div style="display:flex; align-items:center; gap:16px; min-width:0;">
-              <div style="flex:none; width:52px; height:38px; border-radius:7px; background:repeating-linear-gradient(135deg,#e9e6df 0 7px,var(--surface-muted) 7px 14px); border:1px solid var(--border);"></div>
+              <div style="flex:none; width:52px; height:38px; border-radius:7px; background:var(--ph-grad-sm); border:1px solid var(--border);"></div>
               <div style="min-width:0;">
                 <div style="font-family:var(--display); font-size:22px; letter-spacing:-0.005em; color:var(--ink); line-height:1.2;">{{ p.name }}</div>
                 <div style="font-family:var(--ui); font-size:11.5px; letter-spacing:0.06em; text-transform:uppercase; color:var(--text-faint); margin-top:2px;">{{ p.cat }}</div>
@@ -111,13 +111,13 @@
       </div>
       <div>
         <div style="display:flex; align-items:center; gap:9px; margin-bottom:6px;">
-          <span style="width:8px; height:8px; border-radius:50%; background:#c2bcb0;"></span>
+          <span style="width:8px; height:8px; border-radius:50%; background:var(--text-ghost);"></span>
           <span style="font-family:var(--ui); font-size:12px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:var(--text-soft);">Someday / maybe</span>
         </div>
         <sc-for list="{{ someday }}" as="s" hint-placeholder-count="4">
           <div style="display:flex; align-items:baseline; justify-content:space-between; gap:16px; padding:16px 2px; border-bottom:1px solid var(--border-subtle);">
             <div style="font-family:var(--display); font-size:21px; letter-spacing:-0.005em; color:var(--text); line-height:1.25;">{{ s.title }}</div>
-            <span style="font-family:var(--ui); font-size:11px; letter-spacing:0.05em; text-transform:uppercase; color:#bbb6ac; flex:none;">{{ s.tag }}</span>
+            <span style="font-family:var(--ui); font-size:11px; letter-spacing:0.05em; text-transform:uppercase; color:var(--text-ghost); flex:none;">{{ s.tag }}</span>
           </div>
         </sc-for>
       </div>
@@ -129,13 +129,13 @@
   <!-- ===== PROJECT POP CARD ===== -->
   <sc-if value="{{ modalOpen }}" hint-placeholder-val="{{ false }}">
     <div onClick="{{ closeModal }}" style="position:fixed; inset:0; z-index:100; background:rgba(31,29,26,0.34); backdrop-filter:blur(3px); -webkit-backdrop-filter:blur(3px); display:flex; align-items:flex-start; justify-content:center; padding:40px 22px; overflow:auto; animation:popfade .25s ease;">
-      <div onClick="{{ stop }}" style="position:relative; width:min(900px,94vw); margin:auto; background:var(--paper); border:1px solid var(--border); border-radius:18px; box-shadow:0 30px 80px rgba(0,0,0,0.28); overflow:hidden; animation:poprise .3s cubic-bezier(.2,.7,.3,1);">
+      <div onClick="{{ stop }}" style="position:relative; width:min(900px,94vw); margin:auto; background:var(--paper); border:1px solid var(--border); border-radius:var(--panel-radius); box-shadow:0 30px 80px rgba(0,0,0,0.28); overflow:hidden; animation:poprise .3s cubic-bezier(.2,.7,.3,1);">
         <button onClick="{{ closeModal }}" aria-label="Close" style="position:absolute; top:18px; right:18px; z-index:6; width:38px; height:38px; border-radius:50%; border:1px solid var(--border); background:rgba(247,246,243,0.92); backdrop-filter:blur(4px); color:var(--ink-soft); font-size:20px; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center;">&times;</button>
 
         <!-- README LAYOUT -->
         <sc-if value="{{ isReadme }}" hint-placeholder-val="{{ true }}">
           <div>
-            <div style="position:relative; overflow:hidden; height:clamp(220px,34vh,320px); background:repeating-linear-gradient(135deg,#e7e3db 0 12px,#efeae3 12px 24px); display:flex; align-items:center; justify-content:center;">
+            <div style="position:relative; overflow:hidden; height:clamp(220px,34vh,320px); background:var(--ph-grad-lg); display:flex; align-items:center; justify-content:center;">
               <span style="font-family:ui-monospace,Menlo,monospace; font-size:12px; letter-spacing:0.12em; color:var(--text-placeholder); text-transform:uppercase;">{{ open.art }} &mdash; hero image</span>{{ open.cover }}
             </div>
             <div style="padding:38px clamp(26px,5vw,60px) 56px;">
@@ -143,7 +143,7 @@
                 <span>{{ open.cat }}</span><span>&middot;</span><span>{{ open.year }}</span>
               </div>
               <h2 style="font-family:var(--display); font-size:clamp(34px,4.6vw,50px); margin:8px 0 0; letter-spacing:-0.015em; color:var(--ink); line-height:1.05;">{{ open.name }}</h2>
-              <p style="font-family:var(--display); font-size:clamp(19px,2vw,23px); line-height:1.45; color:#7c776e; margin:14px 0 0; max-width:620px; text-wrap:pretty;">{{ open.blurb }}</p>
+              <p style="font-family:var(--display); font-size:clamp(19px,2vw,23px); line-height:1.45; color:var(--text-muted); margin:14px 0 0; max-width:620px; text-wrap:pretty;">{{ open.blurb }}</p>
               <div style="display:flex; flex-wrap:wrap; gap:8px; margin:24px 0 0;">
                 <sc-for list="{{ open.stack }}" as="s" hint-placeholder-count="3">
                   <span style="font-family:var(--ui); font-size:12.5px; color:var(--text-2); background:var(--surface); border:1px solid var(--border); border-radius:999px; padding:6px 13px;">{{ s }}</span>

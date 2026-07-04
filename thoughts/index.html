@@ -76,7 +76,7 @@
     <section style="max-width:var(--mw); margin:0 auto; padding:26px 32px 24px;">
       <div id="thoughtsCols" style="columns:3; column-gap:18px;">
         <sc-for list="{{ items }}" as="t" hint-placeholder-count="6">
-          <a href="#" onClick="{{ t.open }}" style="display:block; width:100%; break-inside:avoid; margin-bottom:18px; background:var(--surface); border:1px solid var(--border); border-radius:var(--card-radius); padding:20px 22px; box-shadow:0 1px 2px rgba(0,0,0,0.02); cursor:pointer;" style-hover="border-color:var(--border-strong); box-shadow:0 6px 18px rgba(0,0,0,0.05);">
+          <a href="#" onClick="{{ t.open }}" class="card card--panel card--tint" style="display:block; width:100%; break-inside:avoid; margin-bottom:18px; background:var(--surface); border:1px solid var(--border); border-radius:var(--card-radius); padding:20px 22px; box-shadow:0 1px 2px rgba(0,0,0,0.02); cursor:pointer;">
             <div style="display:flex; justify-content:space-between; align-items:center;">
               <span style="display:flex; align-items:center; gap:6px;">{{ t.pin }}<span style="font-family:var(--ui); font-size:10.5px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--text-soft); background:var(--surface-muted); padding:3px 9px; border-radius:999px;">{{ t.tag }}</span></span>
               <span style="font-family:var(--ui); font-size:12.5px; color:var(--text-faint);">{{ t.date }}</span>
@@ -94,7 +94,7 @@
   <!-- ===== THOUGHT READER (text-only) ===== -->
   <sc-if value="{{ readerOpen }}" hint-placeholder-val="{{ false }}">
     <div onClick="{{ closeReader }}" style="position:fixed; inset:0; z-index:100; background:rgba(31,29,26,0.34); backdrop-filter:blur(3px); -webkit-backdrop-filter:blur(3px); display:flex; align-items:flex-start; justify-content:center; padding:40px 22px; overflow:auto; animation:popfade .25s ease;">
-      <div onClick="{{ stop }}" style="position:relative; width:min(860px,94vw); margin:auto; background:var(--paper); border:1px solid var(--border); border-radius:18px; box-shadow:0 30px 80px rgba(0,0,0,0.28); animation:poprise .3s cubic-bezier(.2,.7,.3,1);">
+      <div onClick="{{ stop }}" style="position:relative; width:min(860px,94vw); margin:auto; background:var(--paper); border:1px solid var(--border); border-radius:var(--panel-radius); box-shadow:0 30px 80px rgba(0,0,0,0.28); animation:poprise .3s cubic-bezier(.2,.7,.3,1);">
         <button onClick="{{ closeReader }}" aria-label="Close" style="position:absolute; top:18px; right:18px; z-index:6; width:38px; height:38px; border-radius:50%; border:1px solid var(--border); background:rgba(247,246,243,0.92); backdrop-filter:blur(4px); color:var(--ink-soft); font-size:20px; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center;">&times;</button>
 
         <div style="padding:54px clamp(26px,6vw,60px) 52px;">

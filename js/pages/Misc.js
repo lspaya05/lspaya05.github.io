@@ -51,9 +51,12 @@
       var p = pics(self);
       var len = p.length;
       var i = (((self.state.slide || 0) % len) + len) % len;
+      // 21px buttons for a comfortable tap target; the visible 7px dot (and its
+      // 1px ring on inactive dots) is painted with a radial-gradient so the rest
+      // of the hit area stays invisible.
       var dotBase = {
-        width: "7px", height: "7px", padding: 0, border: "none",
-        borderRadius: "50%", cursor: "pointer"
+        width: "21px", height: "21px", padding: 0, border: "none",
+        borderRadius: "50%", cursor: "pointer", background: "transparent"
       };
       function go(n) { self.setState({ slide: ((n % len) + len) % len }); }
 
@@ -79,8 +82,8 @@
           return {
             onClick: (function (k) { return function () { go(k); }; })(idx),
             style: idx === i
-              ? assign({}, dotBase, { background: "var(--ink-soft)", transform: "scale(1.25)" })
-              : assign({}, dotBase, { background: "rgba(255,255,255,0.85)", boxShadow: "0 0 0 1px rgba(0,0,0,0.08)" })
+              ? assign({}, dotBase, { background: "radial-gradient(circle, var(--ink-soft) 0 4.4px, transparent 4.4px)" })
+              : assign({}, dotBase, { background: "radial-gradient(circle, rgba(255,255,255,0.85) 0 3.5px, rgba(0,0,0,0.08) 3.5px 4.5px, transparent 4.5px)" })
           };
         }),
         // editable copy

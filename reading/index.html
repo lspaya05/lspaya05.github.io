@@ -50,14 +50,14 @@
     <sc-if value="{{ isBlocks }}" hint-placeholder-val="{{ true }}">
       <div id="booksGrid" style="display:grid; grid-template-columns:repeat(5,1fr); gap:20px;">
         <sc-for list="{{ books }}" as="b" hint-placeholder-count="5">
-          <a href="{{ b.link }}" target="_blank" rel="noopener" style="display:block;" style-hover="opacity:0.9;">
-            <div style="position:relative; aspect-ratio:2/3; border-radius:10px; overflow:hidden; border:1px solid var(--border); background:repeating-linear-gradient(135deg,#e9e6df 0 9px,var(--surface-muted) 9px 18px); box-shadow:0 2px 8px rgba(0,0,0,0.04);">
+          <a href="{{ b.link }}" target="_blank" rel="noopener" class="card" style="display:block;" style-hover="opacity:0.9;">
+            <div style="position:relative; aspect-ratio:2/3; border-radius:10px; overflow:hidden; border:1px solid var(--border); background:var(--ph-grad-sm); box-shadow:0 2px 8px rgba(0,0,0,0.04);">
               <span style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-family:ui-monospace,Menlo,monospace; font-size:10px; letter-spacing:0.08em; color:var(--text-placeholder); text-transform:uppercase;">cover</span>{{ b.cover }}
               {{ b.statusBlocks }}{{ b.bmBlocks }}
             </div>
             <div style="font-family:var(--ui); font-weight:600; font-size:15px; line-height:1.3; margin:11px 0 3px; color:var(--ink);">{{ b.title }}</div>
             <div style="font-family:var(--ui); font-size:12.5px; color:var(--text-faint);">{{ b.author }}</div>
-            <div style="font-family:var(--ui); font-size:11.5px; color:#bbb6ac; margin-top:4px;">{{ b.when }}</div>
+            <div style="font-family:var(--ui); font-size:11.5px; color:var(--text-ghost); margin-top:4px;">{{ b.when }}</div>
           </a>
         </sc-for>
       </div>
@@ -67,7 +67,7 @@
         <sc-for list="{{ books }}" as="b" hint-placeholder-count="5">
           <a href="{{ b.link }}" target="_blank" rel="noopener" style="display:flex; align-items:center; justify-content:space-between; gap:20px; padding:14px 6px; border-bottom:1px solid var(--border-subtle); transition:background .2s ease;" style-hover="background:var(--hover);">
             <div style="display:flex; align-items:center; gap:16px; min-width:0;">
-              <div style="position:relative; overflow:hidden; flex:none; width:34px; height:48px; border-radius:5px; background:repeating-linear-gradient(135deg,#e9e6df 0 7px,var(--surface-muted) 7px 14px); border:1px solid var(--border);">{{ b.cover }}</div>
+              <div style="position:relative; overflow:hidden; flex:none; width:34px; height:48px; border-radius:5px; background:var(--ph-grad-sm); border:1px solid var(--border);">{{ b.cover }}</div>
               <div style="min-width:0;">
                 <div style="display:flex; align-items:center; gap:6px; min-width:0;">{{ b.bmList }}<span style="font-family:var(--ui); font-weight:600; font-size:16px; color:var(--ink); line-height:1.25;">{{ b.title }}</span></div>
                 <div style="font-family:var(--ui); font-size:13px; color:var(--text-faint); margin-top:2px;">{{ b.author }}</div>
@@ -83,7 +83,7 @@
     </sc-if>
     <sc-if value="{{ booksMore }}" hint-placeholder-val="{{ false }}">
       <div style="display:flex; justify-content:center; margin-top:26px;">
-        <button onClick="{{ toggleBooks }}" style="font-family:var(--ui); font-size:13.5px; font-weight:600; color:var(--ink); background:var(--surface); border:1px solid var(--border); border-radius:999px; padding:10px 22px; cursor:pointer; transition:border-color .2s ease, background .2s ease;" style-hover="border-color:var(--border-strong); background:var(--hover);">{{ booksToggleLabel }}</button>
+        <button onClick="{{ toggleBooks }}" style="font-family:var(--ui); font-size:13.5px; font-weight:600; color:var(--ink); background:var(--surface); border:1px solid var(--border); border-radius:999px; padding:10px 22px; cursor:pointer; transition:border-color .2s ease, background .2s ease;" style-hover="border-color:var(--border-strong) !important; background:var(--hover) !important;">{{ booksToggleLabel }}</button>
       </div>
     </sc-if>
   </section>
@@ -97,8 +97,8 @@
     <sc-if value="{{ isBlocks }}" hint-placeholder-val="{{ true }}">
       <div id="podGrid" style="display:grid; grid-template-columns:repeat(3,1fr); gap:16px;">
         <sc-for list="{{ podcasts }}" as="p" hint-placeholder-count="3">
-          <a href="{{ p.link }}" target="_blank" rel="noopener" style="display:flex; gap:16px; align-items:center; background:var(--surface); border:1px solid var(--border); border-radius:var(--card-radius); padding:16px;" style-hover="border-color:var(--border-strong);">
-            <div style="position:relative; overflow:hidden; flex:none; width:64px; height:64px; border-radius:12px; background:repeating-linear-gradient(135deg,#e9e6df 0 8px,var(--surface-muted) 8px 16px);">{{ p.cover }}</div>
+          <a href="{{ p.link }}" target="_blank" rel="noopener" class="card card--panel card--tint" style="display:flex; gap:16px; align-items:center; background:var(--surface); border:1px solid var(--border); border-radius:var(--card-radius); padding:16px;">
+            <div style="position:relative; overflow:hidden; flex:none; width:64px; height:64px; border-radius:12px; background:var(--ph-grad-sm);">{{ p.cover }}</div>
             <div style="min-width:0;">
               <div style="font-family:var(--ui); font-weight:600; font-size:15.5px; color:var(--ink); line-height:1.25;">{{ p.title }}</div>
               <div style="font-family:var(--ui); font-size:13px; color:var(--text-muted); margin-top:4px; line-height:1.45;">{{ p.note }}</div>
@@ -111,7 +111,7 @@
       <div style="border-top:1px solid var(--border-subtle);">
         <sc-for list="{{ podcasts }}" as="p" hint-placeholder-count="3">
           <a href="{{ p.link }}" target="_blank" rel="noopener" style="display:flex; align-items:center; gap:16px; padding:14px 6px; border-bottom:1px solid var(--border-subtle); transition:background .2s ease;" style-hover="background:var(--hover);">
-            <div style="position:relative; overflow:hidden; flex:none; width:40px; height:40px; border-radius:9px; background:repeating-linear-gradient(135deg,#e9e6df 0 7px,var(--surface-muted) 7px 14px);">{{ p.cover }}</div>
+            <div style="position:relative; overflow:hidden; flex:none; width:40px; height:40px; border-radius:9px; background:var(--ph-grad-sm);">{{ p.cover }}</div>
             <div style="min-width:0;">
               <span style="font-family:var(--ui); font-weight:600; font-size:15px; color:var(--ink);">{{ p.title }}</span>
               <span style="font-family:var(--ui); font-size:13px; color:var(--text-faint); margin-left:10px;">{{ p.note }}</span>
@@ -132,9 +132,9 @@
       <sc-for list="{{ articles }}" as="a" hint-placeholder-count="6">
         <a href="{{ a.link }}" target="_blank" rel="noopener" style="display:flex; align-items:center; justify-content:space-between; gap:20px; padding:18px 6px; border-bottom:1px solid var(--border-subtle); transition:background .2s ease;" style-hover="background:var(--hover);">
           <div style="display:flex; align-items:center; gap:14px; min-width:0;">
-            <div style="position:relative; overflow:hidden; flex:none; width:28px; height:28px; border-radius:7px; background:repeating-linear-gradient(135deg,#e9e6df 0 6px,var(--surface-muted) 6px 12px);">{{ a.cover }}</div>
+            <div style="position:relative; overflow:hidden; flex:none; width:28px; height:28px; border-radius:7px; background:var(--ph-grad-sm);">{{ a.cover }}</div>
             <span style="font-family:var(--ui); font-weight:600; font-size:15.5px; color:var(--ink);">{{ a.title }}</span>
-            <span style="font-family:var(--ui); font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:#b1aca2; flex:none;">{{ a.cat }}</span>
+            <span style="font-family:var(--ui); font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:var(--text-ghost); flex:none;">{{ a.cat }}</span>
           </div>
           <span style="font-family:var(--ui); font-size:13px; color:var(--text-faint); flex:none;">{{ a.source }} &#8599;</span>
         </a>
@@ -152,9 +152,9 @@
     <sc-if value="{{ isBlocks }}" hint-placeholder-val="{{ true }}">
       <div id="resGrid" style="display:grid; grid-template-columns:repeat(4,1fr); gap:14px;">
         <sc-for list="{{ resources }}" as="r" hint-placeholder-count="8">
-          <a href="{{ r.link }}" target="_blank" rel="noopener" style="display:flex; flex-direction:column; background:var(--surface); border:1px solid var(--border); border-radius:var(--card-radius); padding:18px 18px 16px;" style-hover="border-color:var(--border-strong); box-shadow:0 6px 18px rgba(0,0,0,0.05);">
+          <a href="{{ r.link }}" target="_blank" rel="noopener" class="card card--panel card--tint" style="display:flex; flex-direction:column; background:var(--surface); border:1px solid var(--border); border-radius:var(--card-radius); padding:18px 18px 16px;">
             <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;">
-              <div style="position:relative; overflow:hidden; width:34px; height:34px; border-radius:9px; background:repeating-linear-gradient(135deg,#e9e6df 0 6px,var(--surface-muted) 6px 12px); border:1px solid var(--border);">{{ r.cover }}</div>
+              <div style="position:relative; overflow:hidden; width:34px; height:34px; border-radius:9px; background:var(--ph-grad-sm); border:1px solid var(--border);">{{ r.cover }}</div>
               <span style="font-family:var(--ui); font-size:10px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--text-faint);">{{ r.type }}</span>
             </div>
             <div style="font-family:var(--ui); font-weight:600; font-size:14.5px; line-height:1.3; color:var(--ink);">{{ r.title }}</div>
@@ -168,11 +168,11 @@
         <sc-for list="{{ resources }}" as="r" hint-placeholder-count="8">
           <a href="{{ r.link }}" target="_blank" rel="noopener" style="display:flex; align-items:center; justify-content:space-between; gap:20px; padding:15px 6px; border-bottom:1px solid var(--border-subtle); transition:background .2s ease;" style-hover="background:var(--hover);">
             <div style="display:flex; align-items:center; gap:14px; min-width:0;">
-              <div style="position:relative; overflow:hidden; flex:none; width:30px; height:30px; border-radius:8px; background:repeating-linear-gradient(135deg,#e9e6df 0 6px,var(--surface-muted) 6px 12px); border:1px solid var(--border);">{{ r.cover }}</div>
+              <div style="position:relative; overflow:hidden; flex:none; width:30px; height:30px; border-radius:8px; background:var(--ph-grad-sm); border:1px solid var(--border);">{{ r.cover }}</div>
               <span style="font-family:var(--ui); font-weight:600; font-size:15px; color:var(--ink);">{{ r.title }}</span>
               <span style="font-family:var(--ui); font-size:13px; color:var(--text-faint);">{{ r.by }}</span>
             </div>
-            <span style="font-family:var(--ui); font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:#b1aca2; flex:none;">{{ r.type }}</span>
+            <span style="font-family:var(--ui); font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:var(--text-ghost); flex:none;">{{ r.type }}</span>
           </a>
         </sc-for>
       </div>

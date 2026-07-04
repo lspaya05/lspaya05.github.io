@@ -51,8 +51,9 @@
   <section style="max-width:var(--mw); margin:0 auto; padding:0 32px 74px;">
     <div id="tplGrid" style="margin-top:10px; display:grid; grid-template-columns:repeat(3,1fr); gap:18px;">
       <sc-for list="{{ items }}" as="it" hint-placeholder-count="6">
-        <a href="#" style="display:block; background:var(--surface); border:1px solid var(--border); border-radius:var(--card-radius); overflow:hidden; box-shadow:0 1px 2px rgba(0,0,0,0.02);" style-hover="border-color:var(--border-strong); box-shadow:0 6px 18px rgba(0,0,0,0.05);">
-          <div style="position:relative; overflow:hidden; height:150px; background:repeating-linear-gradient(135deg,#edeae4 0 10px,#f5f3ee 10px 20px); display:flex; align-items:center; justify-content:center;">
+        <!-- card hover (scale + border + shadow + tint) comes from css/base.css: .card / .card--panel / .card--tint -->
+        <a href="#" class="card card--panel card--tint" style="display:block; background:var(--surface); border:1px solid var(--border); border-radius:var(--card-radius); overflow:hidden; box-shadow:0 1px 2px rgba(0,0,0,0.02);">
+          <div style="position:relative; overflow:hidden; height:150px; background:var(--ph-grad); display:flex; align-items:center; justify-content:center;">
             <span style="font-family:ui-monospace,Menlo,monospace; font-size:11px; letter-spacing:0.1em; color:var(--text-placeholder); text-transform:uppercase;">{{ it.art }}</span>{{ it.cover }}
           </div>
           <div style="padding:18px 20px 22px;">

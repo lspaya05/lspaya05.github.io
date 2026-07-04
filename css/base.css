@@ -20,9 +20,48 @@ a { color: inherit; text-decoration: none; }
 ::-webkit-scrollbar-thumb { background: var(--scroll-thumb); border-radius: 8px; }
 ::-webkit-scrollbar-track { background: transparent; }
 
-/* card hover affordances (driven by the presence of --card-radius in a style) */
-[style*="--card-radius"]:hover:not([style*="repeating-linear"]) { background: var(--surface-muted) !important; }
-[style*="repeating-linear"][style*="--card-radius"]:hover { filter: brightness(0.975); }
+/* =============================================================================
+ * Bento/card hover system. Opt in per element via class:
+ *   .card         shared transition + slight hover scale + press feedback
+ *   .card--lg     gentler scale for large tiles/panels
+ *   .card--panel  border + lifted shadow on hover
+ *   .card--tint   background fill on hover
+ * !important is required on border/shadow/background because each element's
+ * base styles live in its inline style="" attribute (DC runtime templates).
+ * ========================================================================== */
+.card {
+  transition: transform .22s cubic-bezier(.2,.7,.3,1),
+              border-color .22s ease, background-color .22s ease,
+              box-shadow .22s ease, color .22s ease, opacity .22s ease;
+}
+.card:active { transform: scale(.99); }
+
+@media (hover:hover) and (pointer:fine) {
+  .card:hover        { transform: scale(1.02); }
+  .card--lg:hover    { transform: scale(1.012); }
+  .card--panel:hover { border-color: var(--border-strong) !important;
+                       box-shadow: 0 6px 18px rgba(0,0,0,0.06) !important; }
+  .card--tint:hover  { background-color: var(--surface-muted) !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .card { transition: none; }
+  .card:hover, .card--lg:hover, .card:active { transform: none; }
+  * { animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+}
+
+/* compact nav on small screens (SiteNav.dc.html has no style block of its own;
+ * !important because the component's base styles are inline) */
+@media (max-width:640px) {
+  #siteHeader > div { padding: 10px 16px !important; gap: 12px !important; }
+  #siteBrand { font-size: 20px !important; }
+  #siteNav a { padding: 6px 9px !important; font-size: 12.5px !important; }
+}
+@media (max-width:480px) {
+  #siteBrand { display: none !important; }
+  #siteHeader > div { justify-content: center !important; }
+}
 
 /* shared modal / slide animations */
 @keyframes popfade { from { opacity: 0; } to { opacity: 1; } }
