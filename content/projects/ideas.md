@@ -1,28 +1,18 @@
 ---
 # The "Ideas" section on the Projects page. group: working | someday
 items:
-  - title: A self-hosted reading tracker
+  - title: A self-Hosted Document Server
     group: working
-    note: Feeds the Reading page here
-    progress: ~60%
-  - title: PCB business card
-    group: working
-    note: Tiny LED matrix, ATtiny brain
-    progress: ~30%
-  - title: Bike computer → this site
-    group: working
-    note: Logs rides straight to Misc
+    note: Connects + Syncs with my Remarkable tablet and more
     progress: just started
-  - title: An e-ink desk dashboard
+  - title: This Website 
+    group: working
+    note: Template completed, slowing fill out my actual information.
+    progress: ~30%
+  - title: A Desk widget displaying things on your calendar 
     group: someday
     tag: Hardware
-  - title: A tiny synth from logic gates
-    group: someday
-    tag: Hardware
-  - title: Local-first notes with CRDTs
+  - title: Some Deep Learning thing.
     group: someday
     tag: Software
-  - title: Generative type specimen
-    group: someday
-    tag: Design
 ---
